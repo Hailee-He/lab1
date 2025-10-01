@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rce14dcpyrj"
-path="res://.godot/imported/Slimer.png-1d191569cb3729d39d4b45052fb59d3a.ctex"
+uid="uid://bd0la08d0bdio"
+path="res://.godot/imported/Foxy.png-3ac2d1f5c84782f411e5da24dd9173f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Slimer.png"
-dest_files=["res://.godot/imported/Slimer.png-1d191569cb3729d39d4b45052fb59d3a.ctex"]
+source_file="res://Asset/sprites/Foxy.png"
+dest_files=["res://.godot/imported/Foxy.png-3ac2d1f5c84782f411e5da24dd9173f8.ctex"]
 
 [params]
 

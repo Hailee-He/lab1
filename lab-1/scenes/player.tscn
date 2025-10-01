@@ -1,7 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://dngymvbjo2qw0"]
+[gd_scene load_steps=25 format=3 uid="uid://dngymvbjo2qw0"]
 
-[ext_resource type="Texture2D" uid="uid://bd0la08d0bdio" path="res://Foxy.png" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://bd0la08d0bdio" path="res://Asset/sprites/Foxy.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dyb8q7qx7m7oh" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://mey04qjsj2ne" path="res://scenes/bullet.tscn" id="2_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://22hlh6bvet5n" path="res://Asset/Audio/Gun.mp3" id="4_dqkch"]
+[ext_resource type="AudioStream" uid="uid://dhsku2deugmim" path="res://Asset/Audio/GameOver.mp3" id="5_qlg0r"]
+[ext_resource type="AudioStream" uid="uid://b6y4muwgq15db" path="res://Asset/Audio/Running.mp3" id="5_tuyoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
 atlas = ExtResource("1_3vyb7")
@@ -138,13 +142,34 @@ animations = [{
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animator")]
 script = ExtResource("1_g2els")
 animator = NodePath("AnimatedSprite2D")
+bullet_scene = ExtResource("2_qhqgy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"game_over"
 autoplay = "idle"
-frame_progress = 0.76661944
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 5)
 shape = SubResource("CircleShape2D_g2els")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="firesound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dqkch")
+
+[node name="RunningSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_tuyoq")
+volume_db = 5.0
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qlg0r")
+volume_db = 5.0
+
+[node name="RestartTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_fire"]
+[connection signal="timeout" from="RestartTimer" to="." method="_reload_screne"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd0la08d0bdio"
-path="res://.godot/imported/Foxy.png-192d09e06de685e50991b670be4ca764.ctex"
+uid="uid://dd1y6l58hcfx3"
+path="res://.godot/imported/ForestBackground.png-d7708200f8881cee4ffef4bd7f64462c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Foxy.png"
-dest_files=["res://.godot/imported/Foxy.png-192d09e06de685e50991b670be4ca764.ctex"]
+source_file="res://Asset/sprites/ForestBackground.png"
+dest_files=["res://.godot/imported/ForestBackground.png-d7708200f8881cee4ffef4bd7f64462c.ctex"]
 
 [params]
 

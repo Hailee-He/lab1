@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8beucxps64j1"]
+[gd_scene load_steps=8 format=3 uid="uid://b8beucxps64j1"]
 
-[ext_resource type="Texture2D" uid="uid://dd1y6l58hcfx3" path="res://ForestBackground.png" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://gnsogjf5u1sg" path="res://scripts/GameManager.gd" id="1_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://dd1y6l58hcfx3" path="res://Asset/sprites/ForestBackground.png" id="2_iywne"]
 [ext_resource type="PackedScene" uid="uid://dngymvbjo2qw0" path="res://scenes/player.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://cr7y4q5hfft3h" path="res://scenes/slime.tscn" id="3_lnu2h"]
+[ext_resource type="FontFile" uid="uid://dy52y68y3mcwt" path="res://Asset/Uranus_Pixel_11Px.ttf" id="5_iywne"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_yqjtg"]
 normal = Vector2(-0.00075278117, -0.9999997)
@@ -12,16 +14,21 @@ distance = 2.006406
 normal = Vector2(-0.9999951, -0.0031219989)
 distance = -237.00061
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("spawn_timer", "score_label", "game_over_label")]
+script = ExtResource("1_lbhrr")
+slime_scene = ExtResource("3_lnu2h")
+spawn_timer = NodePath("Timer")
+score_label = NodePath("CanvasLayer/Label")
+game_over_label = NodePath("CanvasLayer/Game Over Label")
 
 [node name="background 1" type="Sprite2D" parent="."]
 position = Vector2(-121, -1)
-texture = ExtResource("1_uwrxv")
+texture = ExtResource("2_iywne")
 metadata/_edit_lock_ = true
 
 [node name="background 2" type="Sprite2D" parent="."]
 position = Vector2(120, -1)
-texture = ExtResource("1_uwrxv")
+texture = ExtResource("2_iywne")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -29,7 +36,7 @@ zoom = Vector2(2.435, 2.435)
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_yqjtg")]
-position = Vector2(2, -1)
+position = Vector2(3, -3)
 
 [node name="Boundary" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -59,5 +66,41 @@ rotation = 3.1384706
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D4"]
 shape = SubResource("WorldBoundaryShape2D_lnu2h")
 
-[node name="Area2D" parent="." instance=ExtResource("3_lnu2h")]
-position = Vector2(50, 4)
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 50.0
+offset_top = 65.0
+offset_right = 204.0
+offset_bottom = 114.0
+theme_override_fonts/font = ExtResource("5_iywne")
+theme_override_font_sizes/font_size = 48
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="Game Over Label" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -24.5
+offset_right = 118.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0.72156864, 1)
+theme_override_colors/font_outline_color = Color(0.76862746, 0.14117648, 0.10980392, 1)
+theme_override_constants/outline_size = 60
+theme_override_fonts/font = ExtResource("5_iywne")
+theme_override_font_sizes/font_size = 120
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="Timer" to="." method="_spawn_slime"]
