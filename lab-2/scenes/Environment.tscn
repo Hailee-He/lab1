@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://bw3b1y1ha3a6n"]
+
+[ext_resource type="Texture2D" uid="uid://b3a785eyo1lyu" path="res://assets/sprites/graveyard.png" id="1_377eb"]
+[ext_resource type="PackedScene" uid="uid://2d8ncqa1bat2" path="res://scenes/Player.tscn" id="2_uw02d"]
+[ext_resource type="PackedScene" uid="uid://8k8cjyrjuqa4" path="res://scenes/WillOWisp.tscn" id="3_py72o"]
+[ext_resource type="PackedScene" uid="uid://dhqk2arflwhf5" path="res://scenes/Tombstone.tscn" id="4_xn25y"]
+[ext_resource type="AudioStream" uid="uid://8i2m7iu34r6b" path="res://assets/sounds/ambient_graveyard.wav" id="5_xn25y"]
+[ext_resource type="Script" uid="uid://6wyrb02j7k27" path="res://scripts/WispSpawner.gd" id="6_7rjrx"]
+[ext_resource type="PackedScene" uid="uid://bpje2aktpugxm" path="res://scenes/SecretZone.tscn" id="7_sx5lp"]
+[ext_resource type="Script" uid="uid://ljnetnhe2se5" path="res://scripts/EnvironmentSound.gd" id="7_vgs0q"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_377eb")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(3.9999998, -2)
+scale = Vector2(1.692256, 1.8807336)
+zoom = Vector2(0.57, 0.57)
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("2_uw02d")]
+position = Vector2(-926, 464)
+
+[node name="WillOWisp" parent="." instance=ExtResource("3_py72o")]
+metadata/_edit_lock_ = true
+
+[node name="Tombstone" parent="." instance=ExtResource("4_xn25y")]
+position = Vector2(2, -164)
+
+[node name="WispSpawner" type="Node2D" parent="."]
+position = Vector2(0, 2)
+script = ExtResource("6_7rjrx")
+wisp_scene = ExtResource("3_py72o")
+metadata/_edit_lock_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_xn25y")
+autoplay = true
+script = ExtResource("7_vgs0q")
+
+[node name="SecretZone" parent="." instance=ExtResource("7_sx5lp")]
+visible = false
+position = Vector2(14, -137.99998)
+scale = Vector2(0.21325286, 0.22841369)

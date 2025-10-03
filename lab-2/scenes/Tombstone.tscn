@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhqk2arflwhf5"]
+
+[ext_resource type="Script" uid="uid://b6sm8hypd2agh" path="res://scripts/Tombstone.gd" id="1_62jlw"]
+[ext_resource type="Texture2D" uid="uid://bkb0e7c6snad6" path="res://assets/sprites/tombstone.png" id="2_c1us3"]
+[ext_resource type="AudioStream" uid="uid://byjojqn5a30hf" path="res://assets/sounds/tomb_open.ogg" id="3_c1us3"]
+
+[sub_resource type="Animation" id="Animation_s1gvt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n4e58"]
+resource_name = "open_tomb"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(20, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w6g5m"]
+_data = {
+&"RESET": SubResource("Animation_s1gvt"),
+&"open_tomb": SubResource("Animation_n4e58")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0t2ba"]
+radius = 22.0
+height = 58.0
+
+[node name="Tombstone" type="Node2D"]
+script = ExtResource("1_62jlw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.037037, 1.0454545)
+texture = ExtResource("2_c1us3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_w6g5m")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_c1us3")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_0t2ba")
