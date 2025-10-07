@@ -40,6 +40,7 @@ metadata/_edit_lock_ = true
 stream = ExtResource("5_xn25y")
 autoplay = true
 script = ExtResource("7_vgs0q")
+ambient_sound = ExtResource("5_xn25y")
 
 [node name="SecretZone" parent="." instance=ExtResource("7_sx5lp")]
 visible = false

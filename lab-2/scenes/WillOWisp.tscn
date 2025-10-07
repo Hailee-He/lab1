@@ -1,20 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://8k8cjyrjuqa4"]
+[gd_scene load_steps=6 format=3 uid="uid://8k8cjyrjuqa4"]
 
 [ext_resource type="Script" uid="uid://dxy4o5omxonml" path="res://scripts/WillOWisp.gd" id="1_caw37"]
 [ext_resource type="Texture2D" uid="uid://bguiy1j71dybf" path="res://assets/sprites/wisp.png" id="2_7hnwo"]
 [ext_resource type="AudioStream" uid="uid://btkj0go33c0mp" path="res://assets/sounds/wisp_loop.ogg" id="3_xr667"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xr667"]
+radius = 69.260376
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_ye4ax"]
 radius = 22.090721
 
 [node name="WillOWisp" type="CharacterBody2D"]
+collision_mask = 0
 script = ExtResource("1_caw37")
-speed = 150.0
 separation_weight = 1.0
 alignment_weight = 1.2
 
 [node name="wisp" type="Sprite2D" parent="."]
 texture = ExtResource("2_7hnwo")
+
+[node name="Sensor" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor"]
+shape = SubResource("CircleShape2D_xr667")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ye4ax")

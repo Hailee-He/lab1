@@ -1,15 +1,10 @@
 extends AudioStreamPlayer
 
+@export var ambient_sound: AudioStream
+@export var initial_volume: float = -10.0
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var ambient_sound = load("res://assets/sounds/ambient_graveyard.wav")
 	if ambient_sound:
 		stream = ambient_sound
-		volume_db = -10.0  # Adjust volume as needed
-		play()
-		# Set to loop
-		finished.connect(_on_finished)
-
-func _on_finished():
-	play()  # Loop the sound
+		volume_db = initial_volume
+		play()  # loop can be set directly in AudioStream resource

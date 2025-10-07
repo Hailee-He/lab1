@@ -2,31 +2,26 @@ extends Node2D
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var audio: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@export var tomb_open_sound: AudioStream
 
-var is_opened: bool = false
+var is_opened := false
 
 func _ready() -> void:
 	add_to_group("tombstone")
 
 func open_tomb(next_scene_path: String):
-	if is_opened:
-		return
-	
+	if is_opened: return
 	is_opened = true
-	print("Opening tomb...")
-	
-	#Play sound effect
-	var sound_effect = load("res://assets/sounds/tomb_open.ogg")  
-	if sound_effect:
-		audio.stream = sound_effect
+
+	if tomb_open_sound:
+		audio.stream = tomb_open_sound
 		audio.play()
 
-	# Play animation
 	if anim and anim.has_animation("open_tomb"):
 		anim.play("open_tomb")
-	
-	# Waiting for the animation and sound effects to finish	
+
 	await get_tree().create_timer(1.5).timeout
-	
-	# Switch to another scene
-	get_tree().change_scene_to_file(next_scene_path)
+	if ResourceLoader.exists(next_scene_path):
+		get_tree().change_scene_to_file(next_scene_path)
+	else:
+		push_error("Scene not found: " + next_scene_path)
