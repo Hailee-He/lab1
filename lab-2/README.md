@@ -38,13 +38,6 @@
 
 ---
 
-## Requirement Checklist (for grading)
-- **Agent Implementation:** ✔ ≥20 autonomous agents, neighbor sensing via local Area2D, no global manager  
-- **Emergent Behavior:** ✔ clear flocking/clustering/splitting; SecretZone unlock from local clustering  
-- **System Complexity:** ✔ simple rules + small weight changes → noticeably different global patterns
-
----
-
 ## Assets
 - **Images:** all from [OpenGameArt.org](https://opengameart.org/)
 - **Audio:** all from [Freesound.org](https://freesound.org/)
