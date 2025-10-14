@@ -59,3 +59,10 @@ Collision layers (summary):
 1 Player, 2 World, 3 Enemy, 4 Hazard/Hitbox, 5 PlayerHurtbox.
 Player collides with World only; hazards use Area2D to avoid sticking.
 
+Assets & Credits
+
+Art & tiles: Ninja Adventure Asset Pack by Pixel-boy — https://pixel-boy.itch.io/ninja-adventure-asset-pack
+
+Running SFX: from Lab 1 assets (course-provided).
+
+Other SFX/BGM added via project’s Music / SFX buses.
