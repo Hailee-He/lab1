@@ -1,7 +1,7 @@
 extends Area2D
 
 # How many half-hearts (pips) to restore; 1 pip = half a heart
-@export var heal_pips: int = 1
+@export var heal_pips: int = 2
 
 func _ready() -> void:
 	# Detect when the player overlaps this pickup

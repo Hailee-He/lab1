@@ -8,6 +8,7 @@ radius = 2.0
 height = 18.5
 
 [node name="Spike" type="Area2D"]
+collision_layer = 8
 script = ExtResource("1_7a7y0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

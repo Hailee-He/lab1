@@ -124,7 +124,7 @@ height = 16.0
 size = Vector2(16, 14)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_qlg0r")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -140,6 +140,8 @@ autoplay = "idle"
 shape = SubResource("CapsuleShape2D_qlg0r")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 1)

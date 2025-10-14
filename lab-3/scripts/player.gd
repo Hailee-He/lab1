@@ -105,6 +105,9 @@ func take_damage(by_pips: int = 1) -> void:
 	# Update HUD directly (optional)
 	if hud and hud.has_method("set_health"):
 		hud.set_health(hp_pips, max_hearts)
+	
+	velocity.y = min(velocity.y, -240.0)
+	invuln_time = 0.3
 
 	# Notify listeners in hearts (pips / 2)
 	emit_signal("health_changed", hp_pips / 2, max_hearts)

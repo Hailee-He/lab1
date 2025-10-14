@@ -46,6 +46,8 @@ radius = 7.0
 radius = 8.0
 
 [node name="Slime" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_p2gj0")
 
 [node name="Anim" type="AnimatedSprite2D" parent="."]
@@ -58,6 +60,8 @@ frame_progress = 0.13118702
 shape = SubResource("CircleShape2D_371uh")
 
 [node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_p2gj0")
