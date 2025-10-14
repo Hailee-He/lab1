@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://ohs1yhpxvmqt"]
+
+[ext_resource type="Script" uid="uid://btknlnrenuica" path="res://scripts/hud.gd" id="1_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://f1mo5uidrglv" path="res://Asset/Sprites/heart/IconHeart.png" id="2_5ysmq"]
+[ext_resource type="Texture2D" uid="uid://b3ohqfphxw6qm" path="res://Asset/Sprites/heart/Heart.png" id="2_6fi6k"]
+[ext_resource type="Script" uid="uid://d1eqwno77ebg" path="res://scripts/hud_hitflash.gd" id="3_6fi6k"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_oo0fn")
+heart_strip = ExtResource("2_6fi6k")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_right = 1152.0
+offset_bottom = 324.0
+color = Color(1, 0.01999998, 0.01999998, 1)
+script = ExtResource("3_6fi6k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Heart1" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_5ysmq")
+stretch_mode = 2
+
+[node name="Heart2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_5ysmq")
+stretch_mode = 2
+
+[node name="Heart3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_5ysmq")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

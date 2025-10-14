@@ -1,0 +1,23 @@
+[gd_scene load_steps=7 format=3 uid="uid://diqpi2ydtanom"]
+
+[ext_resource type="Script" uid="uid://3ffqvcwjensp" path="res://scripts/gem.gd" id="1_5cxma"]
+[ext_resource type="Texture2D" uid="uid://dh4hw3dvjybuc" path="res://Asset/Sprites/Gem/GemRed.png" id="2_dn3vp"]
+[ext_resource type="Texture2D" uid="uid://bykbve7e1sd8u" path="res://Asset/Sprites/Gem/GemGreen.png" id="3_dhpy3"]
+[ext_resource type="Texture2D" uid="uid://cl8y5k6i2l7qu" path="res://Asset/Sprites/Gem/GemPurple.png" id="4_o6gnd"]
+[ext_resource type="Texture2D" uid="uid://b00s8o7wrhg08" path="res://Asset/Sprites/Gem/GemYellow.png" id="5_35lcq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eaa7k"]
+radius = 16.0
+
+[node name="Gem" type="Area2D"]
+script = ExtResource("1_5cxma")
+type = 1
+red_tex = ExtResource("2_dn3vp")
+green_tex = ExtResource("3_dhpy3")
+purple_tex = ExtResource("4_o6gnd")
+yellow_tex = ExtResource("5_35lcq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_eaa7k")
