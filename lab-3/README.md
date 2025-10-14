@@ -3,7 +3,7 @@
 
 Overview
 
-A tiny 2D platformer. Collect 8 gems and touch the flag to level up. On the way you face slimes, spikes, and falling rocks; a medkit can heal you. The project demonstrates Health, Damage, and Respawn systems with clear feedback.
+Collect 8 gems and touch the flag to level up. On the way you face slimes, spikes, and falling rocks; a medkit can heal you. The project demonstrates Health, Damage, and Respawn systems with clear feedback.
 
 Controls
 
