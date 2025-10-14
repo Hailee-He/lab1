@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cdobvtrp8fbre"]
+[gd_scene load_steps=23 format=3 uid="uid://cdobvtrp8fbre"]
 
 [ext_resource type="Script" uid="uid://du0n4sfgdvotk" path="res://scripts/main.gd" id="1_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cfk34clxvyxak" path="res://scenes/player.tscn" id="2_0wfyh"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://diqpi2ydtanom" path="res://scenes/gem.tscn" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://51ossvacpcmp" path="res://scenes/rock.tscn" id="6_tipki"]
 [ext_resource type="PackedScene" uid="uid://dwpbh6f24bcrw" path="res://scenes/checkpoint.tscn" id="7_85g3d"]
+[ext_resource type="PackedScene" uid="uid://c8gfayqtixdap" path="res://scenes/heal_pickup.tscn" id="9_gqmmt"]
 [ext_resource type="AudioStream" uid="uid://bwvbh7by0xx6w" path="res://Asset/Sounds/1 - Adventure Begin.ogg" id="11_ya4ey"]
 [ext_resource type="AudioStream" uid="uid://umjbb5cttddm" path="res://Asset/Sounds/GameOver2.wav" id="12_jkv2x"]
 [ext_resource type="AudioStream" uid="uid://dgkk0yh6me7y2" path="res://Asset/Sounds/Hit.wav" id="13_jbj1t"]
@@ -17,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://cffrvgpjvcyup" path="res://Asset/Sounds/Success1.wav" id="15_dp3eg"]
 [ext_resource type="AudioStream" uid="uid://bbrqpyvfd4r7r" path="res://Asset/Sounds/Running.mp3" id="16_jbj1t"]
 [ext_resource type="AudioStream" uid="uid://ddv3laferdfcy" path="res://Asset/Sounds/LevelUp1.wav" id="17_muem4"]
+[ext_resource type="AudioStream" uid="uid://cc3xyfi4lhdft" path="res://Asset/Sounds/Heal.wav" id="18_0ld40"]
 [ext_resource type="FontFile" uid="uid://di0j2x14ipf1l" path="res://Asset/Uranus_Pixel_11Px.ttf" id="18_dp3eg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_choun"]
@@ -111,6 +113,9 @@ type = 2
 [node name="Gem3" parent="World/Pickups" instance=ExtResource("5_o6xl0")]
 position = Vector2(589, 206)
 
+[node name="HealPickup" parent="World/Pickups" instance=ExtResource("9_gqmmt")]
+position = Vector2(879, 51)
+
 [node name="Checkpoint" parent="World" instance=ExtResource("7_85g3d")]
 position = Vector2(1107, 207)
 scale = Vector2(2.7533875, 2.9733188)
@@ -162,7 +167,13 @@ stream = ExtResource("17_muem4")
 max_polyphony = 8
 bus = &"SFX"
 
+[node name="Heal" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("18_0ld40")
+max_polyphony = 8
+bus = &"SFX"
+
 [node name="LevelUpLabel" type="Label" parent="."]
+visible = false
 offset_left = 660.0
 offset_top = 38.0
 offset_right = 1088.0
@@ -174,3 +185,9 @@ theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("18_dp3eg")
 theme_override_font_sizes/font_size = 100
 text = "LEVEL UP!"
+
+[node name="Fade" type="ColorRect" parent="."]
+visible = false
+offset_right = 1154.0
+offset_bottom = 318.0
+color = Color(0.02, 0.02, 0.02, 1)

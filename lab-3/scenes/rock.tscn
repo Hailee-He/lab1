@@ -39,8 +39,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rmkyt"]
-radius = 19.001465
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mek2u"]
+radius = 35.0
+height = 76.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mek2u"]
 size = Vector2(173, 361)
@@ -52,20 +53,21 @@ freeze = true
 script = ExtResource("1_mek2u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(-1, 0)
 scale = Vector2(4.7150373, 5.0841103)
 sprite_frames = SubResource("SpriteFrames_vqvgd")
 autoplay = "default"
 frame_progress = 0.84015894
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 38)
 scale = Vector2(2, -2)
-shape = SubResource("CircleShape2D_rmkyt")
+shape = SubResource("CapsuleShape2D_mek2u")
 disabled = true
 
 [node name="Trigger" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
-position = Vector2(-0.5, 166.5)
+position = Vector2(0, 157.00003)
 scale = Vector2(1.0963444, 1.0953755)
 shape = SubResource("RectangleShape2D_mek2u")

@@ -38,3 +38,8 @@ stretch_mode = 2
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="GemLabel" type="Label" parent="."]
+offset_top = 12.0
+offset_right = 54.0
+offset_bottom = 35.0

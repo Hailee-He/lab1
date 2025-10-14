@@ -13,6 +13,10 @@ extends Node2D
 @onready var sfx_success    : AudioStreamPlayer = $SFX/Success
 @onready var sfx_run        : AudioStreamPlayer = $SFX/RunLoop
 @onready var sfx_levelup    : AudioStreamPlayer = $SFX/LevelUp
+@onready var sfx_heal       : AudioStreamPlayer = $SFX/Heal
+
+# --- NEW: Fade overlay for smooth respawn ---
+@onready var fade_rect : ColorRect = $Fade    # adjust the path if placed under a CanvasLayer
 
 # --- UI Elements ---
 @onready var level_up_label : Label = $LevelUpLabel   # Label for “LEVEL UP!” text
@@ -85,6 +89,7 @@ func _on_player_died() -> void:
 				hud.set_health(player.hp_pips, player.max_hearts)
 
 	music_resume()
+	_fade_in_out()   # NEW: smooth black fade after respawn
 
 
 # ==========================================================
@@ -190,3 +195,23 @@ func music_resume() -> void:
 		await sfx_gameover.finished
 	if bgm and not bgm.playing:
 		bgm.play()
+
+func sfx_play_heal() -> void:
+	if sfx_heal:
+		sfx_heal.play()
+
+func _fade_in_out() -> void:
+	if not fade_rect: 
+		return
+	fade_rect.visible = true
+	fade_rect.modulate.a = 0.0
+	var t := create_tween()
+	t.tween_property(fade_rect, "modulate:a", 1.0, 0.35)
+	t.tween_interval(0.3)
+	t.tween_property(fade_rect, "modulate:a", 0.0, 0.35)
+	t.tween_callback(Callable(self, "_hide_fade"))
+
+func _hide_fade() -> void:
+	if fade_rect:
+		fade_rect.visible = false
+		

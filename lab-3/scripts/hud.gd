@@ -11,7 +11,7 @@ extends CanvasLayer
 	$HBoxContainer/Heart3 as TextureRect
 ]
 
-@onready var gem_label: Label = get_node_or_null("GemLabel") as Label
+@onready var gem_label: Label = get_node_or_null("GemLabel")
 
 
 func _ready() -> void:
