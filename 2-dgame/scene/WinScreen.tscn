@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmkwiukiha4yj"]
+
+[ext_resource type="Script" uid="uid://bttn1tb22pwjk" path="res://scripts/win_screen.gd" id="1_3l8dw"]
+[ext_resource type="FontFile" uid="uid://d2k2424mh48k1" path="res://Asset/ColaKind.otf" id="1_178fs"]
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3l8dw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 332.0
+offset_top = 238.0
+offset_right = 830.0
+offset_bottom = 393.0
+theme_override_colors/font_color = Color(0.89411765, 0.74509805, 0.16862746, 1)
+theme_override_colors/font_outline_color = Color(0.64058065, 0.283323, 0.6759311, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/outline_size = 45
+theme_override_fonts/font = ExtResource("1_178fs")
+theme_override_font_sizes/font_size = 60
+text = "TIME STABILIZED! 
+YOU WIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 440.0
+offset_right = 761.0
+offset_bottom = 531.0
+theme_override_colors/font_color = Color(0.8750814, 0.8750814, 0.3765157, 1)
+theme_override_colors/font_outline_color = Color(0.6309392, 0.35047582, 0.8423555, 1)
+theme_override_fonts/font = ExtResource("1_178fs")
+theme_override_font_sizes/font_size = 60
+text = "Back to Play"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

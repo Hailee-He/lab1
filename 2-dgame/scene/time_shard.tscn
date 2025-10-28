@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjl62syhvtolh"]
+
+[ext_resource type="Script" uid="uid://ciebuhav6uhn0" path="res://scripts/time_shard.gd" id="1_fw6lk"]
+[ext_resource type="Texture2D" uid="uid://h6ikvtylxd8l" path="res://Asset/sprite/hudCoin.png" id="2_ytiop"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lkjwh"]
+radius = 50.01
+
+[node name="TimeShard" type="Area2D"]
+script = ExtResource("1_fw6lk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ytiop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lkjwh")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://dujdpb60a7hux"]
+
+[ext_resource type="Script" uid="uid://tcn1abjxhlkb" path="res://main.gd" id="1_itxqv"]
+[ext_resource type="FontFile" uid="uid://cvxfeid0j15ey" path="res://Asset/px.ttf" id="2_v0l8b"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_itxqv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1147.0
+offset_bottom = 637.0
+color = Color(0.082088806, 0.7548745, 0.71210146, 1)
+
+[node name="GameName" type="Label" parent="CanvasLayer"]
+offset_left = 228.0
+offset_top = 90.0
+offset_right = 874.0
+offset_bottom = 175.0
+theme_override_fonts/font = ExtResource("2_v0l8b")
+theme_override_font_sizes/font_size = 70
+text = "Time Runner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PressToStart" type="Label" parent="CanvasLayer"]
+offset_left = 140.0
+offset_top = 251.0
+offset_right = 988.0
+offset_bottom = 347.0
+theme_override_colors/font_color = Color(1, 1, 0.1897483, 1)
+theme_override_fonts/font = ExtResource("2_v0l8b")
+theme_override_font_sizes/font_size = 70
+text = "Enter Space to Start"
+horizontal_alignment = 1
