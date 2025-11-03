@@ -1,6 +1,6 @@
 extends CharacterBody2D
 ##
-## player.gd — Player controller
+## Player controller
 ## - Movement & facing
 ## - Shooting (works even while hurt)
 ## - Hit / i-frames (does NOT block shooting)

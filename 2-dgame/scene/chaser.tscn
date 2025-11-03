@@ -243,13 +243,12 @@ animations = [{
 size = Vector2(52, 46)
 
 [node name="Chaser" type="CharacterBody2D"]
+z_index = 2
 collision_layer = 4
-collision_mask = 10
+collision_mask = 0
 script = ExtResource("1_lj0ks")
 speed = 70.0
-hp = 5
-attack_damage = 10
-attack_cooldown = 1.0
+hp = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

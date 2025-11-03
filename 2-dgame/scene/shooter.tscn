@@ -311,7 +311,7 @@ collision_layer = 4
 collision_mask = 27
 script = ExtResource("1_a2qlh")
 speed = 110.0
-hp = 5
+hp = 6
 attack_damage = 15
 attack_cooldown = 1.6
 

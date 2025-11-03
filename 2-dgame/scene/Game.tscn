@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://dw32vyg5ctqmo"]
+[gd_scene load_steps=23 format=4 uid="uid://dw32vyg5ctqmo"]
 
 [ext_resource type="Script" uid="uid://d0esp1tj7r1fd" path="res://scripts/game.gd" id="1_t585p"]
 [ext_resource type="Texture2D" uid="uid://b7wbo2c7wcyad" path="res://Asset/sprite/colored_land.png" id="2_f6bub"]
@@ -17,7 +17,10 @@
 [ext_resource type="Texture2D" uid="uid://bvhh2qti770es" path="res://Asset/sprite/ScrollPlant.png" id="13_ls1fb"]
 [ext_resource type="Texture2D" uid="uid://ci3n54xrlg6qt" path="res://Asset/sprite/ScrollRock.png" id="14_cg8ds"]
 [ext_resource type="Texture2D" uid="uid://c3bixpl276gd7" path="res://Asset/sprite/ScrollThunder.png" id="15_hr58s"]
+[ext_resource type="PackedScene" uid="uid://chexnut70gjhp" path="res://scene/trap_spike.tscn" id="17_cg8ds"]
+[ext_resource type="PackedScene" uid="uid://c05dps8nvthpv" path="res://scene/rock_block.tscn" id="18_hr58s"]
 [ext_resource type="PackedScene" uid="uid://cu52qfeev6jat" path="res://scene/door.tscn" id="18_ls1fb"]
+[ext_resource type="PackedScene" uid="uid://b71ep8bw28hva" path="res://scene/portal_window.tscn" id="19_0ybkd"]
 [ext_resource type="PackedScene" uid="uid://cbpmptn0xds0v" path="res://scene/exit.tscn" id="19_cg8ds"]
 
 [node name="Game" type="Node2D"]
@@ -56,6 +59,7 @@ position = Vector2(818, 457)
 position = Vector2(199, 39)
 
 [node name="shooter" parent="Enemies" instance=ExtResource("5_f6bub")]
+z_index = 2
 position = Vector2(693, 11)
 
 [node name="Items" type="Node2D" parent="."]
@@ -82,13 +86,47 @@ position = Vector2(-783, 6)
 icon = ExtResource("15_hr58s")
 
 [node name="Medkit" parent="Items" instance=ExtResource("7_l37l5")]
-position = Vector2(-447, 405)
-scale = Vector2(2.4799988, 2.4799988)
+position = Vector2(-475, 442.99997)
+scale = Vector2(1.6400003, 1.8399975)
+rock_drop_distance = 600.0
+
+[node name="TrapSpike" parent="Items" instance=ExtResource("17_cg8ds")]
+position = Vector2(-474.00003, -81)
+rotation = 1.5828426
+scale = Vector2(0.67653656, 0.5840202)
+
+[node name="TrapSpike2" parent="Items" instance=ExtResource("17_cg8ds")]
+position = Vector2(82, 296)
+rotation = 3.1381624
+scale = Vector2(0.67653656, 0.5840202)
+
+[node name="TrapSpike3" parent="Items" instance=ExtResource("17_cg8ds")]
+position = Vector2(-78.00006, 215.00002)
+scale = Vector2(0.67653656, 0.5840202)
+
+[node name="TrapSpike4" parent="Items" instance=ExtResource("17_cg8ds")]
+position = Vector2(166, -19)
+rotation = 1.5881218
+scale = Vector2(0.67653656, 0.5840202)
+
+[node name="RockBlock" parent="Items" instance=ExtResource("18_hr58s")]
+position = Vector2(-413, 367.99997)
+scale = Vector2(0.6800011, 0.6400012)
+
+[node name="PortalWindow" parent="Items" instance=ExtResource("19_0ybkd")]
+position = Vector2(-787, 528)
+scale = Vector2(0.75999933, 0.5600012)
+target_path = NodePath("../WindowTargetRight")
+
+[node name="WindowTargetRight" type="Marker2D" parent="Items"]
+position = Vector2(227, 502)
 
 [node name="HUD" parent="." instance=ExtResource("9_msms8")]
 
 [node name="Door" parent="." instance=ExtResource("18_ls1fb")]
-position = Vector2(718, 26)
+position = Vector2(706, 18.000002)
+scale = Vector2(0.76, 0.80000025)
 
 [node name="Exit" parent="." instance=ExtResource("19_cg8ds")]
-position = Vector2(834, -118)
+position = Vector2(833, -112)
+scale = Vector2(1, 1.0399994)
