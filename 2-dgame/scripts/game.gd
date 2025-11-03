@@ -1,55 +1,82 @@
+# game.gd  — level root
 extends Node2D
+"""
+Responsibilities:
+- Spawn/respawn the player (at PlayerSpawn; on death: at the point where the player was ~2s ago).
+- Own and emit HUD signals: time / score / HP% / revive halves / kills / shard progress.
+- Track Time Shards; open the Door when enough are collected; Exit triggers win.
+- Lose when: timer reaches 0 OR HP hits 0 with no revive-halves left.
+- Quality-of-life: grant a short invincibility grace period after respawn to prevent spawn-kill.
+"""
 
-# ---------- Signals for HUD (HUD connects to these) ----------
+# -------------------- Signals (HUD subscribes) --------------------
 signal time_changed(time_left: float, max_time: float)
 signal score_changed(score: int)
-signal health_changed(current_health: int, max_health: int)
-signal lives_changed(current_lives: int, max_lives: int)
+signal health_changed(health_percent: int, max_percent: int)      # 0..100
+signal lives_changed(current_halves: int, max_halves: int)        # 0..6 halves
 signal enemy_killed(enemy_type: String)
+signal scrolls_changed(collected: int, required: int)
 
-# ---------- Exported scenes (ASSIGN IN INSPECTOR) ----------
+# -------------------- Exports --------------------
 @export var player_scene: PackedScene
 @export var lose_scene: PackedScene
 @export var win_scene: PackedScene
 
-# ---------- Game parameters ----------
-@export var start_time: float = 60.0
-@export var start_health: int = 3
-@export var start_lives: int = 3
+@export var player_spawn_path: NodePath = ^"PlayerSpawn"   # drag your Marker2D here
+@export var fallback_spawn: Vector2 = Vector2(-500, 250)   # used if marker is missing
 
-# ---------- Runtime state ----------
+# Door / Exit
+@export var required_scrolls: int = 5
+@export var final_door_path: NodePath                      # drag Door node here
+
+# Core tunables
+@export var start_time: float = 60.0            # countdown seconds
+@export var revive_halves_max: int = 6          # 6 halves = 3 full hearts on HUD
+@export var kill_time_bonus: float = 2.0        # time bonus for any enemy kill
+
+# Post-respawn invincibility (minimal-change solution to prevent instant death)
+@export var respawn_grace_seconds: float = 3.0
+
+# -------------------- Runtime State --------------------
 var time_left: float
 var max_time: float
 var score: int = 0
-var player_health: int
-var max_health: int
-var player_lives: int
-var max_lives: int
+
+# HP is a percentage 0..100
+var hp_percent_max := 100
+var hp_percent := 100
+
+# Revives counted in halves (0..6)
+var revive_halves_left: int
 var is_game_over: bool = false
 
 # Optional kill counters
 var chaser_kills: int = 0
 var shooter_kills: int = 0
 
+# Shards
+var scrolls_collected: int = 0
+
+# ---------------------------------------------------------------------------
+# Lifecycle
+# ---------------------------------------------------------------------------
 func _ready() -> void:
-	# Initialize basic state
 	max_time = start_time
 	time_left = start_time
-	max_health = start_health
-	player_health = start_health
-	max_lives = start_lives
-	player_lives = start_lives
-	# Ensure containers exist
+	hp_percent = hp_percent_max
+	revive_halves_left = revive_halves_max
+
 	_ensure_containers()
-	# Ensure camera exists (simple follower; you可改成你自己的）
-	_ensure_camera()
-	# If TileMapLayer is not present, create quick fallback platforms so你能动起来
-	if not has_node("TileMapLayer"):
+
+	# Quick fallback if level has no TileMap yet
+	if not has_node("Layer1"):
 		_create_basic_platforms()
-	# Spawn player safely
+
 	_spawn_player()
+
 	# Initial HUD push
 	_emit_full_state()
+	scrolls_changed.emit(scrolls_collected, required_scrolls)
 
 func _process(delta: float) -> void:
 	if is_game_over:
@@ -57,10 +84,12 @@ func _process(delta: float) -> void:
 	time_left -= delta
 	if time_left <= 0.0:
 		time_left = 0.0
-		_end_game(false)
+		_end_game(false)  # time-out lose
 	time_changed.emit(time_left, max_time)
 
-# ---------- Safe world setup ----------
+# ---------------------------------------------------------------------------
+# Containers
+# ---------------------------------------------------------------------------
 func _ensure_containers() -> void:
 	if not has_node("Enemies"):
 		var enemies := Node2D.new()
@@ -71,41 +100,51 @@ func _ensure_containers() -> void:
 		items.name = "Items"
 		add_child(items)
 
-func _ensure_camera() -> void:
-	if has_node("Camera2D"):
-		return
-	var cam := Camera2D.new()
-	cam.name = "Camera2D"
-	cam.position_smoothing_enabled = true
-	cam.position_smoothing_speed = 5.0
-	add_child(cam)
-	cam.make_current()
+# ---------------------------------------------------------------------------
+# Player lifecycle & camera
+# ---------------------------------------------------------------------------
+func _get_player_spawn_pos() -> Vector2:
+	var spawn: Node2D = get_node_or_null(player_spawn_path)
+	return spawn.global_position if spawn else fallback_spawn
 
-# ---------- Player lifecycle ----------
+func _make_player_camera_current(p: Node) -> void:
+	var cam := p.get_node_or_null("Camera2D")
+	if cam and cam is Camera2D:
+		(cam as Camera2D).position_smoothing_enabled = true
+		(cam as Camera2D).position_smoothing_speed = 8.0
+		(cam as Camera2D).make_current()
+	else:
+		var fallback_cam: Camera2D = get_node_or_null("Camera2D")
+		if fallback_cam == null:
+			fallback_cam = Camera2D.new()
+			fallback_cam.name = "Camera2D"
+			fallback_cam.position_smoothing_enabled = true
+			fallback_cam.position_smoothing_speed = 8.0
+			add_child(fallback_cam)
+		fallback_cam.make_current()
+
 func _spawn_player() -> void:
-	# Guard: player scene must be assigned in Inspector
-	if player_scene == null:
-		push_error("Game: player_scene is not assigned in Inspector.")
+	var existing := get_tree().get_first_node_in_group("player")
+	if existing and existing is Node2D:
+		(existing as Node2D).global_position = _get_player_spawn_pos()
+		_make_player_camera_current(existing)
 		return
-	# Remove old players (if any)
-	var olds := get_tree().get_nodes_in_group("player")
-	for n in olds:
-		n.queue_free()
-	# Instantiate
+
+	if player_scene == null:
+		push_error("Game: player_scene is not assigned in the Inspector.")
+		return
+
 	var p := player_scene.instantiate()
 	p.name = "Player"
-	# Start bottom-left-ish（之后你会用 TileMap 的出生点）
-	p.position = Vector2(120, 520)
-	# Ensure it is in the 'player' group (used by enemies & HUD)
 	if not p.is_in_group("player"):
 		p.add_to_group("player")
+	(p as Node2D).global_position = _get_player_spawn_pos()
 	add_child(p)
-	# Camera follow
-	if has_node("Camera2D"):
-		$Camera2D.position_smoothing_enabled = true
-		$Camera2D.make_current()
+	_make_player_camera_current(p)
 
-# ---------- Public helpers called by items/enemies/player ----------
+# ---------------------------------------------------------------------------
+# Public helpers (called by player/items/enemies)
+# ---------------------------------------------------------------------------
 func add_time(sec: float) -> void:
 	if is_game_over: return
 	time_left += sec
@@ -117,19 +156,18 @@ func add_score(points: int) -> void:
 	score += points
 	score_changed.emit(score)
 
-func update_health(current: int) -> void:
-	player_health = clamp(current, 0, max_health)
-	health_changed.emit(player_health, max_health)
-	if player_health <= 0:
+# --- Health as percentage (0..100) ---
+func set_health_percent(p: int) -> void:
+	hp_percent = clamp(p, 0, hp_percent_max)
+	health_changed.emit(hp_percent, hp_percent_max)
+	if hp_percent <= 0:
 		_on_player_died()
 
-func heal_to_full() -> void:
-	player_health = max_health
-	health_changed.emit(player_health, max_health)
+func change_health_percent(delta_percent: int) -> void:
+	set_health_percent(hp_percent + delta_percent)
 
-func add_life() -> void:
-	player_lives = min(player_lives + 1, max_lives)
-	lives_changed.emit(player_lives, max_lives)
+func heal_to_full() -> void:
+	set_health_percent(hp_percent_max)
 
 func on_enemy_killed(enemy_type: String) -> void:
 	match enemy_type:
@@ -139,29 +177,69 @@ func on_enemy_killed(enemy_type: String) -> void:
 			shooter_kills += 1
 	enemy_killed.emit(enemy_type)
 	add_score(10)
-	add_time(2.0)
+	add_time(kill_time_bonus)   # same bonus for both
 
-# ---------- Player death / lives ----------
+# -------------------- Shard / Door / Exit flow --------------------
+func add_scroll(amount: int = 1) -> void:
+	if is_game_over: return
+	scrolls_collected = clamp(scrolls_collected + amount, 0, 999)
+	scrolls_changed.emit(scrolls_collected, required_scrolls)
+	if scrolls_collected >= required_scrolls:
+		_open_final_door()
+
+func _open_final_door() -> void:
+	var door := get_node_or_null(final_door_path)
+	if door and door.has_method("open"):
+		door.open()
+
+func can_exit() -> bool:
+	var door := get_node_or_null(final_door_path)
+	return (door and door.has_method("is_open") and door.is_open())
+
+func win_game() -> void:
+	_end_game(true)
+
+# -------------------- Death / Revive --------------------
 func _on_player_died() -> void:
 	if is_game_over:
 		return
-	player_lives -= 1
-	lives_changed.emit(player_lives, max_lives)
-	if player_lives > 0:
-		# Respawn with full health
-		player_health = max_health
-		health_changed.emit(player_health, max_health)
-		_spawn_player()
+
+	if revive_halves_left > 0:
+		revive_halves_left -= 1
+		lives_changed.emit(revive_halves_left, revive_halves_max)
+
+		# Restore HP to full
+		hp_percent = hp_percent_max
+		health_changed.emit(hp_percent, hp_percent_max)
+
+		# Ask the existing player to respawn at "point 2s ago" (player script supplies this)
+		var p := get_tree().get_first_node_in_group("player")
+		if p and p.has_method("respawn_at_point_2s_ago"):
+			p.respawn_at_point_2s_ago()
+			# short invincibility to prevent instant death after respawn
+			if p.has_method("grant_invincibility"):
+				p.grant_invincibility(respawn_grace_seconds)
+			else:
+				# fallback: directly bump its invincible timer if you expose it
+				if "invincible" in p:
+					p.invincible = max(p.invincible, respawn_grace_seconds)
+		else:
+			# Fallback: respawn at spawn marker
+			_spawn_player()
+			var p2 := get_tree().get_first_node_in_group("player")
+			if p2 and "invincible" in p2:
+				p2.invincible = max(p2.invincible, respawn_grace_seconds)
+
 	else:
 		_end_game(false)
 
-# ---------- Game end / scene change ----------
+# -------------------- End game / scene change --------------------
 func _end_game(is_win: bool) -> void:
 	if is_game_over:
 		return
 	is_game_over = true
 	_clear_all_enemies()
-	# Delay a bit, then change scene
+
 	var t := Timer.new()
 	t.one_shot = true
 	t.wait_time = 1.5
@@ -172,7 +250,6 @@ func _end_game(is_win: bool) -> void:
 	t.start()
 
 func _change_to_end_scene(is_win: bool) -> void:
-	# Godot 4 ternary:  value_if_true if condition else value_if_false
 	var target: PackedScene = win_scene if is_win else lose_scene
 	if target != null:
 		get_tree().change_scene_to_packed(target)
@@ -181,20 +258,19 @@ func _change_to_end_scene(is_win: bool) -> void:
 		get_tree().reload_current_scene()
 
 func _clear_all_enemies() -> void:
-	if not has_node("Enemies"):
-		return
+	if not has_node("Enemies"): return
 	for c in $Enemies.get_children():
 		if c != null:
 			c.queue_free()
 
-# ---------- Utility ----------
+# -------------------- Utilities --------------------
 func _emit_full_state() -> void:
 	time_changed.emit(time_left, max_time)
 	score_changed.emit(score)
-	health_changed.emit(player_health, max_health)
-	lives_changed.emit(player_lives, max_lives)
+	health_changed.emit(hp_percent, hp_percent_max)
+	lives_changed.emit(revive_halves_left, revive_halves_max)
 
-# ---------- Fallback platforms (you会改成 TileMapLayer) ----------
+# -------------------- Fallback ground (no Layer1) --------------------
 func _create_basic_platforms() -> void:
 	var ground := StaticBody2D.new()
 	ground.name = "Ground"

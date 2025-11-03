@@ -1,119 +1,93 @@
+# shooter.gd
 extends CharacterBody2D
+"""
+Shooter (higher damage, cannot pass through walls):
+- Lives on ENEMY layer.
+- Collides with WORLD + PLAYER + ITEMS + BULLET (so it respects walls/items).
+- Simple chase + melee "attack" when within range (replace with projectile if needed).
+- Supports 'frozen' flag so Game.gd can briefly freeze enemies after player respawn.
+"""
 
+# ------------ Tunables ------------
 @export var speed: float = 140.0
 @export var hp: int = 4
 @export var attack_range: float = 60.0
 @export var attack_damage: int = 1
 @export var attack_cooldown: float = 1.5
 
+# ------------ Runtime ------------
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
-
-enum State { IDLE, CHASE, ATTACK, HIT, DEAD }
-var current_state: State = State.CHASE
 var player_ref: Node2D
-var attack_timer: float = 0.0
-var search_cooldown: float = 0.0
-var is_facing_right: bool = true
+var atk_cd := 0.0
+var is_facing_right := true
+
+# Freeze hook (used by respawn protection)
+var _frozen := false
+func set_frozen(v: bool) -> void:
+	_frozen = v
 
 func _ready() -> void:
-	collision_layer = 1 << 2
-	collision_mask  = (1 << 1) | (1 << 3) | (1 << 5)
+	# Layers/Masks (using mapping: 1=World,2=Player,3=Enemy,4=Bullet,5=Items)
+	# Shooter must NOT pass through world/items, so it collides with them.
+	collision_layer = 1 << 2                    # Enemy layer
+	collision_mask  = (1 << 0) | (1 << 1) | (1 << 3) | (1 << 4)
+	#                    World     Player      Bullet      Items
+
+	add_to_group("enemies")
 	_find_player()
-	anim.play("walk")
+	if anim:
+		anim.play("walk")
 
 func _physics_process(delta: float) -> void:
-	if current_state == State.DEAD: return
-	if attack_timer > 0.0: attack_timer -= delta
-
-	if not player_ref:
-		search_cooldown -= delta
-		if search_cooldown <= 0.0:
-			_find_player()
-			search_cooldown = 2.0
-
-	match current_state:
-		State.IDLE:
-			_handle_idle()
-		State.CHASE:
-			_handle_chase()
-		State.ATTACK:
-			_handle_attack()
-		State.HIT:
-			velocity = Vector2.ZERO
-		_:
-			pass
-
-func _handle_chase() -> void:
-	if not player_ref:
-		current_state = State.IDLE
+	if hp <= 0:
+		return
+	if _frozen:
+		velocity = Vector2.ZERO
 		return
 
+	atk_cd = max(0.0, atk_cd - delta)
+
+	if not player_ref:
+		_find_player()
+		return
+
+	# Basic pathing: straight-line chase.
+	# If you want smarter navigation, swap to a NavigationAgent2D.
 	var dir := (player_ref.global_position - global_position).normalized()
 	velocity = dir * speed
-	move_and_slide()
+	move_and_slide()   # collides with world/items because of mask above
 
-	var new_face := player_ref.global_position.x > global_position.x
-	if new_face != is_facing_right:
-		is_facing_right = new_face
-
+	is_facing_right = player_ref.global_position.x > global_position.x
 	if anim.animation != "walk":
 		anim.play("walk")
 
-	var d := global_position.distance_to(player_ref.global_position)
-	if d <= attack_range and attack_timer <= 0.0:
-		current_state = State.ATTACK
-		# Godot 4 ternary uses 'A if cond else B'
-		if is_facing_right:
-			anim.play("attack_right")
-		else:
-			anim.play("attack_left")
+	# Melee-style hit when close enough
+	if global_position.distance_to(player_ref.global_position) <= attack_range and atk_cd <= 0.0:
+		atk_cd = attack_cooldown
 		velocity = Vector2.ZERO
+		if anim:
+			anim.play("attack_right" if is_facing_right else "attack_left")
 		if player_ref and player_ref.has_method("take_damage"):
 			player_ref.take_damage(attack_damage)
 
-func _handle_attack() -> void:
-	velocity = Vector2.ZERO
-	if not anim.is_playing():
-		attack_timer = attack_cooldown
-		current_state = State.CHASE
-
-func _handle_idle() -> void:
-	velocity = Vector2.ZERO
-	if anim.animation != "idle":
-		anim.play("idle")
-	if player_ref and global_position.distance_to(player_ref.global_position) <= attack_range * 2.0:
-		current_state = State.CHASE
-
 func take_damage(dmg: int) -> void:
-	if current_state == State.DEAD: return
+	if hp <= 0:
+		return
 	hp -= dmg
-	if anim.sprite_frames.has_animation("hit"):
-		current_state = State.HIT
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("hit"):
 		anim.play("hit")
-	else:
-		current_state = State.CHASE
 	if hp <= 0:
 		_die()
 
 func _die() -> void:
-	current_state = State.DEAD
-	velocity = Vector2.ZERO
 	if has_node("CollisionShape2D"):
 		$CollisionShape2D.set_deferred("disabled", true)
 	var game := get_tree().root.get_node("Game")
 	if game and game.has_method("on_enemy_killed"):
 		game.on_enemy_killed("shooter")
-	if anim.sprite_frames.has_animation("death"):
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("death"):
 		anim.play("death")
 		await anim.animation_finished
-	_queue_free_with_rewards()
-
-func _queue_free_with_rewards() -> void:
-	var game := get_tree().root.get_node("Game")
-	if game and game.has_method("add_score"):
-		game.add_score(10)
-	if game and game.has_method("add_time"):
-		game.add_time(2.0)
 	queue_free()
 
 func _find_player() -> void:

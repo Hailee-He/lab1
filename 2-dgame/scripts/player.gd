@@ -1,14 +1,20 @@
 extends CharacterBody2D
+##
+## player.gd — Player controller
+## - Movement & facing
+## - Shooting (works even while hurt)
+## - Hit / i-frames (does NOT block shooting)
+## - Records a short trail of recent positions so we can respawn at
+##   “where the player was N seconds ago”
+##
 
-# -------- Tunable Parameters --------
+# ---------------- Tunables ----------------
 @export var move_speed: float = 140.0
-@export var max_health: int = 3
 @export var fire_cooldown: float = 0.18
 @export var invincible_time: float = 0.5
-@export var respawn_time: float = 1.5
 @export var bullet_scene: PackedScene = preload("res://scene/bullet.tscn")
 
-# Bullet spawn offsets relative to player center (adjust for your sprite size)
+# Spawn offsets for the muzzle relative to the player center
 @export var muzzle_offset_px := {
 	"up":    Vector2(0, -12),
 	"down":  Vector2(0,  12),
@@ -16,62 +22,75 @@ extends CharacterBody2D
 	"right": Vector2( 12, 0)
 }
 
-# -------- Runtime State --------
+# ---------------- Runtime state ----------------
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
-var health: int
-var lives: int = 3
-var facing: String = "down"     # "up"/"down"/"left"/"right"
-var shoot_cd: float = 0.0
-var invincible: float = 0.0
-var is_dead: bool = false
-var is_hurt_playing: bool = false
-var respawn_position: Vector2 = Vector2(300, 200)
-var death_position: Vector2 = Vector2.ZERO
+var facing: String = "down"        # "up" | "down" | "left" | "right"
+var shoot_cd: float = 0.0          # cooldown timer
+var invincible: float = 0.0        # i-frame timer
+var is_dead: bool = false          # set & cleared by Game
 
+# We still play the hurt animation for feedback, but it NEVER blocks shooting.
+var is_hurt_playing: bool = false
+
+# -------------- Trail for “2 seconds ago” respawn --------------
+const TRAIL_SECONDS := 3.0          # keep last 3s of positions (>= 2s)
+const TRAIL_HZ := 20.0              # sample 20 times per second
+const TRAIL_DT := 1.0 / TRAIL_HZ
+var _trail_time := 0.0
+var _trail_sample_acc := 0.0
+var _trail : Array = []             # each: { "t": float, "pos": Vector2 }
+
+# ===============================================================
+# Lifecycle
+# ===============================================================
 func _ready() -> void:
-	health = max_health
 	add_to_group("player")
-	respawn_position = global_position
 	anim.play("idle-down")
 
-	# Ensure non-looping one-shot animations exist
+	# Make sure HURT is not looping (so it ends visually)
 	if anim.sprite_frames.has_animation("hurt"):
 		anim.sprite_frames.set_animation_loop("hurt", false)
-	if anim.sprite_frames.has_animation("death"):
-		anim.sprite_frames.set_animation_loop("death", false)
+	# When any animation finishes, if it was "hurt", clear the flag
+	anim.animation_finished.connect(_on_anim_finished)
 
-	respawn_position = global_position
+	# Init trail
+	_trail.clear()
+	_trail_time = 0.0
+	_trail_sample_acc = 0.0
+	_push_trail_sample()
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		velocity = Vector2.ZERO
-		if not anim.is_playing() and anim.animation == "death":
-			handle_death_complete()
 		return
 
-	# Timers
+	# --- timers ---
 	if shoot_cd > 0.0: shoot_cd -= delta
 	if invincible > 0.0: invincible -= delta
-	if is_hurt_playing and not anim.is_playing() and anim.animation == "hurt":
+	# Safety: if hurt animation already stopped, clear the cosmetic flag
+	if is_hurt_playing and !anim.is_playing():
 		is_hurt_playing = false
 
-	# Movement input
+	# --- record trail (~20Hz, keep 3s) ---
+	_record_trail(delta)
+
+	# --- movement ---
 	var input_vec := Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-		Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+		Input.get_action_strength("ui_down")  - Input.get_action_strength("ui_up")
 	).normalized()
 	velocity = input_vec * move_speed
 	move_and_slide()
 
-	# Facing
+	# update facing
 	if input_vec.length() > 0.1:
 		if abs(input_vec.x) > abs(input_vec.y):
-			facing = "right" if input_vec.x > 0 else "left"
+			facing = ("right" if input_vec.x > 0.0 else "left")
 		else:
-			facing = "down" if input_vec.y > 0 else "up"
+			facing = ("down" if input_vec.y > 0.0 else "up")
 
-	# Animation
+	# --- animations (hurt anim is purely visual; does NOT block firing) ---
 	if is_hurt_playing:
 		if anim.animation != "hurt":
 			anim.play("hurt")
@@ -80,27 +99,31 @@ func _physics_process(delta: float) -> void:
 	else:
 		anim.play("idle-" + facing)
 
-	# Shooting
+	# --- shooting ---
 	if Input.is_action_pressed("shoot"):
 		_try_shoot()
 
-# -------- Shooting --------
+# ===============================================================
+# Shooting
+# ===============================================================
 func _try_shoot() -> void:
-	if shoot_cd > 0.0 or is_dead or is_hurt_playing:
+	# IMPORTANT: do NOT block by `is_hurt_playing`
+	if shoot_cd > 0.0 or is_dead:
 		return
 	shoot_cd = fire_cooldown
 	_shoot()
 
 func _shoot() -> void:
 	if bullet_scene == null:
-		push_error("Bullet scene is null!")
+		push_error("player.gd: bullet_scene is null; assign in Inspector.")
 		return
+
 	if anim.sprite_frames.has_animation("shot"):
 		anim.play("shot")
 
 	var bullet := bullet_scene.instantiate()
 
-	# Determine direction using match as a statement
+	# direction from facing
 	var dir: Vector2 = Vector2.DOWN
 	match facing:
 		"up":
@@ -111,91 +134,93 @@ func _shoot() -> void:
 			dir = Vector2.LEFT
 		"right":
 			dir = Vector2.RIGHT
-		_:
-			dir = Vector2.DOWN
 
+	# spawn position
 	var off: Vector2 = muzzle_offset_px.get(facing, Vector2.ZERO)
 	bullet.global_position = global_position + off
 
+	# communicate direction to bullet
 	if bullet.has_method("set_direction"):
 		bullet.set_direction(dir)
 
+	# add to scene tree
 	get_parent().add_child(bullet)
 
-# -------- Damage / Death --------
+# ===============================================================
+# Damage / i-frames / hooks called by Game
+# ===============================================================
+## Called by enemies. If inside i-frames, ignore the hit.
+## NOTE: `amount` is interpreted as “HP percent” in your design;
+## HP% is actually owned/updated by Game so HUD stays consistent.
 func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
 	if is_dead or invincible > 0.0:
 		return
 
-	health -= amount
-	invincible = invincible_time
-	_update_hud_health()
+	# Tell Game to change HP% (negative delta)
+	var game := get_tree().root.get_node_or_null("Game")
+	if game and game.has_method("change_health_percent"):
+		game.change_health_percent(-amount)
 
-	if health <= 0:
-		die()
-	else:
-		is_hurt_playing = true
-		if anim.sprite_frames.has_animation("hurt"):
-			anim.play("hurt")
-		if knockback != Vector2.ZERO:
-			velocity = knockback
+	# Visual feedback
+	is_hurt_playing = true
+	if anim.sprite_frames.has_animation("hurt"):
+		anim.play("hurt")
 
-func die() -> void:
-	is_dead = true
-	velocity = Vector2.ZERO
-	death_position = global_position
-	lives -= 1
-	_update_hud_lives()
-	if anim.sprite_frames.has_animation("death"):
-		anim.play("death")
-	else:
-		handle_death_complete()
+	if knockback != Vector2.ZERO:
+		velocity = knockback
 
-func handle_death_complete() -> void:
-	if lives > 0:
-		respawn()
-	else:
-		game_over()
+	# Local i-frames for repeated hits
+	invincible = max(invincible, invincible_time)
 
-func respawn() -> void:
-	health = max_health
-	global_position = respawn_position
+## Game gives extra invincibility seconds after respawn
+func grant_invincibility(sec: float) -> void:
+	invincible = max(invincible, sec)
+
+## Game requests: respawn at “2 seconds ago” point
+func respawn_at_point_2s_ago() -> void:
+	var pos := _get_point_seconds_ago(2.0)
+	global_position = pos
+	visible = true
 	is_dead = false
 	is_hurt_playing = false
-	invincible = invincible_time
-	_update_hud_health()
-	if has_node("CollisionShape2D"):
-		$CollisionShape2D.disabled = false
-	visible = true
 	anim.play("idle-down")
+	# i-frames are granted from Game via grant_invincibility()
 
-func game_over() -> void:
-	var game := get_tree().root.get_node("Game")
-	if game and game.has_method("end_game"):
-		game.end_game(false)
+# ===============================================================
+# Anim callbacks
+# ===============================================================
+func _on_anim_finished() -> void:
+	if anim.animation == "hurt":
+		is_hurt_playing = false
+
+# ===============================================================
+# Trail recording / query
+# ===============================================================
+func _record_trail(delta: float) -> void:
+	_trail_time += delta
+	_trail_sample_acc += delta
+	if _trail_sample_acc >= TRAIL_DT:
+		_trail_sample_acc -= TRAIL_DT
+		_push_trail_sample()
+		_trim_trail()
+
+func _push_trail_sample() -> void:
+	_trail.append({ "t": _trail_time, "pos": global_position })
+
+func _trim_trail() -> void:
+	var cutoff := _trail_time - TRAIL_SECONDS
+	while _trail.size() > 0 and _trail[0]["t"] < cutoff:
+		_trail.pop_front()
+
+func _get_point_seconds_ago(sec: float) -> Vector2:
+	var target_t := _trail_time - sec
+	var best_idx := -1
+	for i in range(_trail.size()):
+		if _trail[i]["t"] <= target_t:
+			best_idx = i
+	if best_idx >= 0:
+		return _trail[best_idx]["pos"]
+	elif _trail.size() > 0:
+		return _trail[0]["pos"]
 	else:
-		get_tree().reload_current_scene()
-
-# -------- HUD Bridge --------
-func _update_hud_health() -> void:
-	var game := get_tree().root.get_node("Game")
-	if game and game.has_method("update_health"):
-		game.update_health(health)
-
-func _update_hud_lives() -> void:
-	var game := get_tree().root.get_node("Game")
-	if game and game.has_method("update_lives"):
-		game.update_lives(lives)
-
-# -------- Utilities --------
-func heal(amount: int) -> void:
-	if is_dead: return
-	health = min(health + amount, max_health)
-	_update_hud_health()
-
-func add_life() -> void:
-	lives += 1
-	_update_hud_lives()
-
-func set_respawn_position(p: Vector2) -> void:
-	respawn_position = p
+		return global_position

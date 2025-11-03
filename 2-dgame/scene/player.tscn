@@ -249,7 +249,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bup7g")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 6.0
 }, {
@@ -424,7 +424,8 @@ radius = 25.0
 height = 78.0
 
 [node name="player" type="CharacterBody2D"]
-collision_mask = 19
+collision_layer = 2
+collision_mask = 21
 script = ExtResource("1_fvtld")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -432,11 +433,15 @@ texture_filter = 1
 position = Vector2(-1, 1.0000019)
 scale = Vector2(1.56, 1.65)
 sprite_frames = SubResource("SpriteFrames_rtno0")
-animation = &"shot"
-frame = 3
-frame_progress = 1.0
+animation = &"hurt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_x6a6d")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -512
+limit_top = -512
+limit_right = 901
+limit_bottom = 551
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0

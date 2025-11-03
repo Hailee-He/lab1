@@ -307,9 +307,13 @@ animations = [{
 radius = 36.138622
 
 [node name="shooter" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 21
+collision_layer = 4
+collision_mask = 27
 script = ExtResource("1_a2qlh")
+speed = 110.0
+hp = 5
+attack_damage = 15
+attack_cooldown = 1.6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

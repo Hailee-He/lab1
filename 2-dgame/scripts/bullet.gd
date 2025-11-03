@@ -10,7 +10,7 @@ func _ready() -> void:
 	monitoring = true
 	monitorable = true
 	collision_layer = 1 << 3               # Bullet layer
-	collision_mask  = (1 << 2) | (1 << 5)  # Hit Enemies + World
+	collision_mask  = (1 << 0) | (1 << 2)  # Hit Enemies + World
 
 	# Connect collision callback
 	body_entered.connect(_on_body_entered)
