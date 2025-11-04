@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjl62syhvtolh"]
+[gd_scene load_steps=5 format=3 uid="uid://cjl62syhvtolh"]
 
 [ext_resource type="Script" uid="uid://ciebuhav6uhn0" path="res://scripts/time_shard.gd" id="1_fw6lk"]
 [ext_resource type="Texture2D" uid="uid://2j0harqgx5m1" path="res://Asset/sprite/ScrollIce.png" id="2_ytiop"]
+[ext_resource type="AudioStream" uid="uid://ddp3aqdbuvgcb" path="res://Asset/audio/SFX/4-Timeshard.wav" id="3_lkjwh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ytiop"]
 size = Vector2(64, 70)
@@ -17,3 +18,8 @@ texture = ExtResource("2_ytiop")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ytiop")
+
+[node name="SFXPickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_lkjwh")
+volume_db = 3.0
+bus = &"SFX"

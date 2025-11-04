@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cidef8tob1l35"]
+[gd_scene load_steps=49 format=3 uid="uid://cidef8tob1l35"]
 
 [ext_resource type="Script" uid="uid://b0qmjeys1cc8" path="res://scripts/shooter.gd" id="1_a2qlh"]
 [ext_resource type="Texture2D" uid="uid://dl72nqfuh43rv" path="res://Asset/sprite/GiantRedSamurai/AttackLeft.png" id="2_y75o7"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bymvxyl2e7qvm" path="res://Asset/sprite/GiantRedSamurai/Dead.png" id="4_walqm"]
 [ext_resource type="Texture2D" uid="uid://podckhwqvs5r" path="res://Asset/sprite/GiantRedSamurai/Idle.png" id="5_hokdm"]
 [ext_resource type="Texture2D" uid="uid://ctl14yl0fea7y" path="res://Asset/sprite/GiantRedSamurai/Walk.png" id="6_27jf0"]
+[ext_resource type="AudioStream" uid="uid://6hc2vfklbdo5" path="res://Asset/audio/SFX/3-Shooterwalk.wav" id="8_hokdm"]
+[ext_resource type="AudioStream" uid="uid://dr3engiyhjdcr" path="res://Asset/audio/SFX/3-ShooterDeath.wav" id="9_27jf0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rcj5l"]
 atlas = ExtResource("2_y75o7")
@@ -324,3 +326,12 @@ frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rtul8")
+
+[node name="SFXWalk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_hokdm")
+bus = &"SFX"
+
+[node name="SFXDeath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_27jf0")
+volume_db = -1.0
+bus = &"SFX"

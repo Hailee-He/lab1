@@ -1,36 +1,64 @@
-[gd_scene load_steps=3 format=3 uid="uid://dujdpb60a7hux"]
+[gd_scene load_steps=6 format=3 uid="uid://dujdpb60a7hux"]
 
-[ext_resource type="Script" uid="uid://tcn1abjxhlkb" path="res://main.gd" id="1_itxqv"]
+[ext_resource type="Script" uid="uid://tcn1abjxhlkb" path="res://scripts/main.gd" id="1_itxqv"]
+[ext_resource type="PackedScene" uid="uid://dw32vyg5ctqmo" path="res://scene/Game.tscn" id="2_0ha60"]
 [ext_resource type="FontFile" uid="uid://cvxfeid0j15ey" path="res://Asset/px.ttf" id="2_v0l8b"]
+[ext_resource type="FontFile" uid="uid://cd7hoph2tgsq1" path="res://Asset/CCOverbyteOn.ttf" id="3_brvut"]
+[ext_resource type="AudioStream" uid="uid://cpuhkrru88f2d" path="res://Asset/audio/BGM/Waiting.wav" id="3_wp4xf"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_itxqv")
+game_scene = ExtResource("2_0ha60")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_right = 1147.0
 offset_bottom = 637.0
-color = Color(0.082088806, 0.7548745, 0.71210146, 1)
+color = Color(0.12941177, 0.76862746, 0.76862746, 1)
 
 [node name="GameName" type="Label" parent="CanvasLayer"]
-offset_left = 228.0
-offset_top = 90.0
+offset_left = 232.0
+offset_top = 2.0
 offset_right = 874.0
-offset_bottom = 175.0
+offset_bottom = 146.0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0.8, 0.2, 1)
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_v0l8b")
-theme_override_font_sizes/font_size = 70
-text = "Time Runner"
+theme_override_font_sizes/font_size = 60
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PressToStart" type="Label" parent="CanvasLayer"]
-offset_left = 140.0
-offset_top = 251.0
-offset_right = 988.0
-offset_bottom = 347.0
-theme_override_colors/font_color = Color(1, 1, 0.1897483, 1)
-theme_override_fonts/font = ExtResource("2_v0l8b")
-theme_override_font_sizes/font_size = 70
-text = "Enter Space to Start"
+[node name="StoryLabel" type="Label" parent="CanvasLayer"]
+offset_top = 162.0
+offset_right = 1142.0
+offset_bottom = 517.0
+theme_override_colors/font_color = Color(0.9607843, 0.9607843, 0.9607843, 1)
+theme_override_colors/font_outline_color = Color(0, 0.26666668, 0.33333334, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_brvut")
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="PressToStart" type="Label" parent="CanvasLayer"]
+offset_left = 285.0
+offset_top = 560.0
+offset_right = 821.0
+offset_bottom = 621.0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.8980392, 0.36078432, 1)
+theme_override_colors/font_outline_color = Color(0.39607844, 0.2509804, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_v0l8b")
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BGMWaiting" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_wp4xf")
+autoplay = true
+bus = &"BGM"

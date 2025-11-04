@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b71ep8bw28hva"]
+[gd_scene load_steps=5 format=3 uid="uid://b71ep8bw28hva"]
 
 [ext_resource type="Script" uid="uid://df8cjptt2hhod" path="res://scripts/portal_window.gd" id="1_c4s0e"]
 [ext_resource type="Texture2D" uid="uid://c2j5gnyapefjv" path="res://Asset/sprite/window.png" id="1_fdnjp"]
+[ext_resource type="AudioStream" uid="uid://dhjhlpl5hmio4" path="res://Asset/audio/SFX/2-PortalWindow.wav" id="3_xlojs"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c4s0e"]
 radius = 62.0
@@ -17,3 +18,9 @@ texture = ExtResource("1_fdnjp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_c4s0e")
+
+[node name="SFXTeleport" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_xlojs")
+volume_db = 15.0
+pitch_scale = 0.59
+bus = &"SFX"

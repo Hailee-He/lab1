@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c05dps8nvthpv"]
+[gd_scene load_steps=5 format=3 uid="uid://c05dps8nvthpv"]
 
-[ext_resource type="Texture2D" uid="uid://cna140vjof1bn" path="res://Asset/weight.png" id="1_fnakb"]
+[ext_resource type="Texture2D" uid="uid://cna140vjof1bn" path="res://Asset/sprite/weight.png" id="1_fnakb"]
+[ext_resource type="AudioStream" uid="uid://df2q4tkfwdad" path="res://Asset/audio/SFX/4-RockBlock.wav" id="2_6g246"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fnakb"]
 bounce = 0.4
@@ -18,3 +19,9 @@ texture = ExtResource("1_fnakb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6g246")
+
+[node name="SFXRock" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_6g246")
+volume_db = 2.0
+pitch_scale = 0.61
+bus = &"SFX"

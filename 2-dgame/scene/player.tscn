@@ -1,8 +1,12 @@
-[gd_scene load_steps=57 format=3 uid="uid://dbiahiblic7sx"]
+[gd_scene load_steps=61 format=3 uid="uid://dbiahiblic7sx"]
 
 [ext_resource type="Script" uid="uid://bwuan1bl6nqw8" path="res://scripts/player.gd" id="1_fvtld"]
 [ext_resource type="Texture2D" uid="uid://c42kt1do3kqyp" path="res://Asset/sprite/player hurt&death.png" id="2_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://w5e8gask4jfh" path="res://Asset/sprite/player-walk.png" id="3_s4jxa"]
+[ext_resource type="AudioStream" uid="uid://ceohs18yk5di2" path="res://Asset/audio/SFX/2-playerShoot.wav" id="4_ct4mp"]
+[ext_resource type="AudioStream" uid="uid://c3ye4328qv4c1" path="res://Asset/audio/SFX/2-playerHurt.wav" id="5_hp4bs"]
+[ext_resource type="AudioStream" uid="uid://cdkqie8x8x08m" path="res://Asset/audio/SFX/2-playerDeath.wav" id="6_g2vtq"]
+[ext_resource type="AudioStream" uid="uid://dv11q1i0fgosa" path="res://Asset/audio/SFX/2-playerRunning.mp3" id="7_2fvbb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oh5ij"]
 atlas = ExtResource("2_ct4mp")
@@ -445,3 +449,21 @@ limit_right = 901
 limit_bottom = 551
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
+
+[node name="SFXShoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ct4mp")
+bus = &"SFX"
+
+[node name="SFXHurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_hp4bs")
+volume_db = 1.0
+bus = &"SFX"
+
+[node name="SFXDeath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_g2vtq")
+bus = &"SFX"
+
+[node name="SFXRunLoop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_2fvbb")
+volume_db = 2.0
+bus = &"SFX"

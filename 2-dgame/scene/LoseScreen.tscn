@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqegngfmgsb5d"]
+[gd_scene load_steps=4 format=3 uid="uid://cqegngfmgsb5d"]
 
 [ext_resource type="FontFile" uid="uid://cd7hoph2tgsq1" path="res://Asset/CCOverbyteOn.ttf" id="1_513yx"]
 [ext_resource type="Script" uid="uid://b6hho0m8ut5uw" path="res://scripts/lose_screen.gd" id="1_anqv0"]
+[ext_resource type="AudioStream" uid="uid://dc375g7yobc6o" path="res://Asset/audio/BGM/BGM3-lose.wav" id="3_auofs"]
 
 [node name="LoseScreen" type="Control"]
 layout_mode = 3
@@ -16,30 +17,57 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_anqv0")
 
-[node name="Label" type="Label" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 289.0
-offset_top = 197.0
-offset_right = 832.0
-offset_bottom = 280.0
-theme_override_colors/font_color = Color(0.99999994, 0.34196818, 0.19265592, 1)
-theme_override_colors/font_outline_color = Color(0.96, 0.96, 0.96, 1)
-theme_override_constants/outline_size = 35
+offset_right = 1149.0
+offset_bottom = 642.0
+color = Color(0.3529412, 0.101960786, 0.14117648, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -41.5
+offset_right = 271.5
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0.4, 0.4, 1)
+theme_override_constants/outline_size = 45
 theme_override_fonts/font = ExtResource("1_513yx")
 theme_override_font_sizes/font_size = 60
 text = "You Lose"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 447.0
-offset_top = 370.0
-offset_right = 669.0
-offset_bottom = 439.0
-theme_override_colors/font_color = Color(0.929166, 0.9015673, 0.30025062, 1)
-theme_override_colors/font_outline_color = Color(0.97939056, 0.6815033, 0.8560174, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.50100005
+anchor_top = 0.726
+anchor_right = 0.50100005
+anchor_bottom = 0.726
+offset_left = -111.15204
+offset_top = -34.447998
+offset_right = 110.84796
+offset_bottom = 34.552002
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.81960785, 0.81960785, 1)
+theme_override_colors/font_outline_color = Color(0.22745098, 0.05490196, 0.08627451, 1)
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_513yx")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 40
 text = "Restart"
+
+[node name="BGMLose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_auofs")
+volume_db = 2.0
+autoplay = true
+bus = &"BGM"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
