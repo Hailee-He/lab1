@@ -1,10 +1,12 @@
-[gd_scene load_steps=38 format=3 uid="uid://btkj43gtd7sqk"]
+[gd_scene load_steps=40 format=3 uid="uid://btkj43gtd7sqk"]
 
 [ext_resource type="Script" uid="uid://c7ci3qftxu2ea" path="res://scripts/chaser.gd" id="1_lj0ks"]
 [ext_resource type="Texture2D" uid="uid://vhpsfeug8wnp" path="res://Asset/sprite/GiantSlime/Hit.png" id="2_8dh86"]
 [ext_resource type="Texture2D" uid="uid://bguljjnmbmpm5" path="res://Asset/sprite/GiantSlime/SlimerDeath.png" id="2_re1fs"]
 [ext_resource type="Texture2D" uid="uid://bn6001bpl4x2h" path="res://Asset/sprite/GiantSlime/Idle.png" id="3_re1fs"]
 [ext_resource type="Texture2D" uid="uid://df5xryplt8mhq" path="res://Asset/sprite/GiantSlime/Jump.png" id="4_caqne"]
+[ext_resource type="AudioStream" uid="uid://qflj3e4ysqvg" path="res://Asset/audio/SFX/3-ChaserJump.wav" id="6_5qlgo"]
+[ext_resource type="AudioStream" uid="uid://6rboi6uvrsmi" path="res://Asset/audio/SFX/3-ChaserDeath.mp3" id="7_bdqr7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_caqne"]
 atlas = ExtResource("2_re1fs")
@@ -259,3 +261,12 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_8dh86")
+
+[node name="SFXMove" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_5qlgo")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SFXDeath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_bdqr7")
+bus = &"SFX"

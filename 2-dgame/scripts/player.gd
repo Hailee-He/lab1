@@ -6,6 +6,7 @@ extends CharacterBody2D
 ## - Hit / i-frames (does NOT block shooting)
 ## - Records a short trail of recent positions so we can respawn at
 ##   “where the player was N seconds ago”
+## - Plays SFX: shoot / hurt / death (optional) / running loop
 ##
 
 # ---------------- Tunables ----------------
@@ -23,12 +24,16 @@ extends CharacterBody2D
 }
 
 # ---------------- Runtime state ----------------
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim: AnimatedSprite2D      = $AnimatedSprite2D
+@onready var sfx_shoot: AudioStreamPlayer2D = $SFXShoot
+@onready var sfx_hurt: AudioStreamPlayer2D  = $SFXHurt
+@onready var sfx_death: AudioStreamPlayer2D = $SFXDeath
+@onready var sfx_run: AudioStreamPlayer2D   = $SFXRunLoop
 
 var facing: String = "down"        # "up" | "down" | "left" | "right"
 var shoot_cd: float = 0.0          # cooldown timer
 var invincible: float = 0.0        # i-frame timer
-var is_dead: bool = false          # set & cleared by Game
+var is_dead: bool = false          # set & cleared by Game if you need it
 
 # We still play the hurt animation for feedback, but it NEVER blocks shooting.
 var is_hurt_playing: bool = false
@@ -66,16 +71,18 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# --- timers ---
-	if shoot_cd > 0.0: shoot_cd -= delta
-	if invincible > 0.0: invincible -= delta
+	if shoot_cd > 0.0:
+		shoot_cd -= delta
+	if invincible > 0.0:
+		invincible -= delta
 	# Safety: if hurt animation already stopped, clear the cosmetic flag
-	if is_hurt_playing and !anim.is_playing():
+	if is_hurt_playing and not anim.is_playing():
 		is_hurt_playing = false
 
 	# --- record trail (~20Hz, keep 3s) ---
 	_record_trail(delta)
 
-	# --- movement ---
+	# --- movement input ---
 	var input_vec := Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
 		Input.get_action_strength("ui_down")  - Input.get_action_strength("ui_up")
@@ -86,9 +93,9 @@ func _physics_process(delta: float) -> void:
 	# update facing
 	if input_vec.length() > 0.1:
 		if abs(input_vec.x) > abs(input_vec.y):
-			facing = ("right" if input_vec.x > 0.0 else "left")
+			facing = "right" if input_vec.x > 0.0 else "left"
 		else:
-			facing = ("down" if input_vec.y > 0.0 else "up")
+			facing = "down" if input_vec.y > 0.0 else "up"
 
 	# --- animations (hurt anim is purely visual; does NOT block firing) ---
 	if is_hurt_playing:
@@ -98,6 +105,14 @@ func _physics_process(delta: float) -> void:
 		anim.play("walk-" + facing)
 	else:
 		anim.play("idle-" + facing)
+
+	# --- running SFX loop ---
+	var is_moving := velocity.length() > 0.1
+	if sfx_run:
+		if is_moving and not sfx_run.playing:
+			sfx_run.play()
+		elif not is_moving and sfx_run.playing:
+			sfx_run.stop()
 
 	# --- shooting ---
 	if Input.is_action_pressed("shoot"):
@@ -118,6 +133,7 @@ func _shoot() -> void:
 		push_error("player.gd: bullet_scene is null; assign in Inspector.")
 		return
 
+	# tiny shot animation (optional)
 	if anim.sprite_frames.has_animation("shot"):
 		anim.play("shot")
 
@@ -146,6 +162,10 @@ func _shoot() -> void:
 	# add to scene tree
 	get_parent().add_child(bullet)
 
+	# play shooting SFX
+	if sfx_shoot:
+		sfx_shoot.play()
+
 # ===============================================================
 # Damage / i-frames / hooks called by Game
 # ===============================================================
@@ -171,6 +191,18 @@ func take_damage(amount: int, knockback: Vector2 = Vector2.ZERO) -> void:
 
 	# Local i-frames for repeated hits
 	invincible = max(invincible, invincible_time)
+
+	# Hurt SFX
+	if sfx_hurt:
+		sfx_hurt.play()
+
+## Optional helper: call this from Game exactly at the moment
+## you consider the player “really dead” (before respawn logic).
+func play_death_sfx() -> void:
+	if sfx_run and sfx_run.playing:
+		sfx_run.stop()
+	if sfx_death:
+		sfx_death.play()
 
 ## Game gives extra invincibility seconds after respawn
 func grant_invincibility(sec: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://dw32vyg5ctqmo"]
+[gd_scene load_steps=24 format=4 uid="uid://dw32vyg5ctqmo"]
 
 [ext_resource type="Script" uid="uid://d0esp1tj7r1fd" path="res://scripts/game.gd" id="1_t585p"]
 [ext_resource type="Texture2D" uid="uid://b7wbo2c7wcyad" path="res://Asset/sprite/colored_land.png" id="2_f6bub"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cu52qfeev6jat" path="res://scene/door.tscn" id="18_ls1fb"]
 [ext_resource type="PackedScene" uid="uid://b71ep8bw28hva" path="res://scene/portal_window.tscn" id="19_0ybkd"]
 [ext_resource type="PackedScene" uid="uid://cbpmptn0xds0v" path="res://scene/exit.tscn" id="19_cg8ds"]
+[ext_resource type="AudioStream" uid="uid://gjdy8c8i84b2" path="res://Asset/audio/BGM/BGM1-just run.wav" id="23_j1pk8"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_t585p")
@@ -130,3 +131,9 @@ scale = Vector2(0.76, 0.80000025)
 [node name="Exit" parent="." instance=ExtResource("19_cg8ds")]
 position = Vector2(833, -112)
 scale = Vector2(1, 1.0399994)
+
+[node name="BGMLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_j1pk8")
+volume_db = -10.0
+autoplay = true
+bus = &"BGM"

@@ -2,24 +2,34 @@ extends Area2D
 ##
 ## medkit.gd — full-heal pickup that also drops a rock block
 ## - When the player touches the medkit:
-##     1) Heal to full (via Game.gd)
-##     2) Drop the RockBlock down to block the lower corridor
-##     3) Play a small pickup FX and remove the medkit
+##     1) Heal to full (via Game.gd HP% system)
+##     2) Tween the RockBlock down to close the lower path
+##     3) Play a pickup SFX (on the medkit)
+##     4) When the rock finishes falling, play a rock impact SFX
+##     5) Play a small pickup FX and remove the medkit
 ##
 
-# Optional: how much to heal in percent (we always use 100 for full heal)
+# How much to heal in percent (100 = full health in your HP% design)
 @export var heal_percent: int = 100
 
 # RockBlock to drop after pickup (set this in the Inspector)
-# In your scene RockBlock is a sibling of Medkit under Items, so default "../RockBlock" works.
+# In your scene RockBlock is a sibling of Medkit under Items,
+# so "../RockBlock" should work by default.
 @export var rock_block_path: NodePath = ^"../RockBlock"
 
-# How far and how fast the rock should fall (Y+ = down)
+# How far (Y+) and how long the rock falls
 @export var rock_drop_distance: float = 96.0
 @export var rock_drop_time: float = 0.6
 
-# Optional SFX (drop an AudioStreamPlayer as a child and keep this path)
-@export var sfx_node_path: NodePath = ^"AudioStreamPlayer"
+# ---------- SFX paths ----------
+# Pickup SFX on the Medkit itself (child AudioStreamPlayer2D)
+@export var sfx_pickup_path: NodePath = ^"SFXPickup"
+# Rock impact SFX on the RockBlock (child AudioStreamPlayer2D)
+@export var sfx_rock_path: NodePath = ^"../RockBlock/SFXRock"
+
+# ---------- Cached references ----------
+@onready var _sfx_pickup: AudioStreamPlayer2D = get_node_or_null(sfx_pickup_path)
+@onready var _sfx_rock  : AudioStreamPlayer2D = get_node_or_null(sfx_rock_path)
 
 # Guard so the medkit can only be used once
 var _consumed: bool = false
@@ -50,17 +60,16 @@ func _on_body_entered(body: Node) -> void:
 		elif game.has_method("heal_to_full"):
 			game.heal_to_full()
 	else:
-		# Fallback: if the player has its own heal function
+		# Fallback: if the player has its own heal() function
 		if body.has_method("heal"):
 			body.heal(999)
 
 	# --- 2) Drop the rock block to close the lower path ---
 	_drop_rock_block()
 
-	# --- 3) Optional SFX ---
-	var sfx := get_node_or_null(sfx_node_path) as AudioStreamPlayer
-	if sfx:
-		sfx.play()
+	# --- 3) Play pickup SFX (medkit heal sound), if present ---
+	if _sfx_pickup:
+		_sfx_pickup.play()
 
 	# Disable this medkit’s collision so it cannot be collected twice
 	_disable_collision()
@@ -83,6 +92,12 @@ func _drop_rock_block() -> void:
 	tw.tween_property(rock, "position", end_pos, rock_drop_time)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_IN)
+
+	# When the rock finishes falling, play the rock impact SFX (if assigned)
+	if _sfx_rock:
+		tw.finished.connect(func() -> void:
+			_sfx_rock.play()
+		)
 
 
 func _disable_collision() -> void:

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cu52qfeev6jat"]
+[gd_scene load_steps=6 format=3 uid="uid://cu52qfeev6jat"]
 
 [ext_resource type="Script" uid="uid://blscx4jkklmns" path="res://scripts/door.gd" id="1_psa10"]
 [ext_resource type="Texture2D" uid="uid://u6leq154bad0" path="res://Asset/sprite/doorClosed_mid.png" id="1_y5pye"]
 [ext_resource type="Texture2D" uid="uid://cnasnf3cuiu4j" path="res://Asset/sprite/doorOpen_mid.png" id="3_2tyue"]
+[ext_resource type="AudioStream" uid="uid://c63e0g8acu78d" path="res://Asset/audio/SFX/4-doorOpen.wav" id="4_2tyue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i7qj5"]
 size = Vector2(128, 128)
@@ -22,3 +23,8 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_i7qj5")
+
+[node name="SFXOpen" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2tyue")
+volume_db = 24.0
+bus = &"SFX"
