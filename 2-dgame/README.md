@@ -1,88 +1,128 @@
-Time Runner
+# Time Runner
 
-Time Runner is a small 2D action-maze game made in Godot 4.5 for an Advanced Game Design systems-thinking assignment. A full run takes about 3–10 minutes.
+_Time Runner_ is a small 2D action–maze game made in Godot 4.5 for an **Advanced Game Design – Systems Thinking** assignment.  
+A full run usually takes about **3–10 minutes**.
 
-Goal
+---
 
-You are trapped in a pixel world with only 60 seconds of frozen time left.
+## Goal
 
-Collect 5 Time Shards to unlock the EXIT door.
+You are trapped in a pixel world with only **60 seconds** of frozen time left.
 
-Reach the exit before the timer hits 0 or your HP and hearts run out.
+- Collect **5 Time Shards** to unlock the **EXIT** door.  
+- Reach the exit **before the timer hits 0** or your **HP and hearts** run out.
 
-Core Systems
+---
 
-HP & Hearts
+## Core Systems
 
-HP is 0–100%.
+### HP & Hearts
 
-You have 3 hearts = 6 half-lives.
+- HP is tracked as **0–100%**.  
+- You start with **3 hearts = 6 half-lives**.  
+- When HP reaches 0:
+  - If you still have any half-hearts, you **revive with full HP**.
+  - You get a short **invincibility window**.
+  - You respawn near where you were **about 2 seconds ago**, based on a position trail.
 
-At 0 HP, if you still have halves, you revive with full HP and a short invincibility window, respawning near where you were about 2 seconds ago.
+### Time
 
-Time
+- Starts at **60s** and continuously counts down.  
+- **Killing enemies** gives a small **time bonus**.  
+- If time reaches 0, you **instantly lose**, no matter how much HP you have.
 
-Starts at 60s, continuously counts down.
+### Enemies
 
-Killing enemies gives a small time bonus.
+- **Chaser (ghost slime)**  
+  - Can move **through walls**.  
+  - Deals **low damage**, but is hard to escape in tight spaces.
 
-Reaching 0s is an automatic loss.
+- **Shooter (armored enemy)**  
+  - **Cannot pass walls**, but deals **higher damage**.  
+  - More threatening in open areas and corridors.
 
-Enemies
+Killing either enemy:
 
-Chaser (ghost slime): moves through walls, low damage.
+- Adds to your **score** and **remaining time**.  
+- Updates **separate kill counters** in the HUD (Chaser / Shooter).
 
-Shooter (armored): blocked by walls, higher damage.
+### Traps & Items
 
-Both increase score and time when killed, and are tracked in HUD counters.
+- **Spike floors**  
+  - Slowly **drain HP** while you stand on them.  
+  - Encourage careful path planning vs. taking risky shortcuts.
 
-Traps & Items
+- **Time Shards**  
+  - There are **5 total**.  
+  - Each shard lights up an icon in the HUD.  
+  - When all 5 are collected, they **signal the door to open**.
 
-Spike floors: slowly drain HP while you stand on them.
+- **Medkit + Rock Block combo**  
+  - The Medkit heals you to **100% HP**.  
+  - But taking it causes a **Rock Block** to fall and **seal the lower path**, creating a trade-off:
+    - Heal now vs. making navigation harder later.
 
-Time Shards: 5 total; light up icons in the HUD and open the door when all are collected.
+- **Portal Window**  
+  - A one-way **teleport** that lets you **escape past the Rock Block** if the corridor is blocked.
 
-Medkit + Rock Block: Medkit heals to 100% HP, but drops a rock that blocks the bottom path.
+---
 
-Portal Window: teleports you past the rock if the path is blocked.
+## HUD & Feedback
 
-HUD & Feedback
+The **top HUD** shows:
 
-Top HUD shows:
+- **Hearts** – remaining half-revives (3 hearts = 6 halves).  
+- **HP% bar** – color changes from green → yellow → red as health gets low.  
+- **Timer** – remaining time in seconds.  
+- **Shard icons** – light up as you collect Time Shards.  
+- **Kill counters** – number of Chasers and Shooters defeated.
 
-Hearts (revives)
+Almost every system has **both sound and visual feedback** (animations, color changes, SFX), so the game **tries to teach itself through play** without needing an external manual.
 
-HP% bar (color changes with health)
+---
 
-Remaining time (seconds)
+## Controls
 
-Shards collected
+- **Move**: Arrow Keys or **WASD**  
+- **Shoot**: **SPACE** or **Left Mouse Button**
 
-Chaser / Shooter kill counts
+### Menu Flow
 
-Almost every system has sound + visual feedback so the game tries to teach itself without external instructions.
+1. **Title** – game name.  
+2. **Story** – short narrative + main goal.  
+3. **Controls & Hints** – controls, enemy types, traps, and HUD explanation.  
+4. **Game** – the actual run.
 
-Controls
+All transitions use **ENTER** or **SPACE**.
 
-Move: Arrow Keys or WASD
+---
 
-Shoot: SPACE or Left Mouse Button
+## Systems Thinking Notes
 
-Menu flow:
+This project focuses on **interconnected systems and meaningful trade-offs**:
 
-Title → 2. Story → 3. Controls & Hints → Game
+- **Time ↔ Enemies**  
+  - Killing enemies is risky but gives **extra time**, encouraging aggressive play for skilled players.
 
-All transitions use ENTER or SPACE.
+- **HP / Hearts ↔ Hazards & Revives**  
+  - Spike floors, enemies, and Medkits all interact with HP and the revive system, creating tension between safety and speed.
 
-Asset Credits
+- **Progression ↔ Level Geometry**  
+  - Time Shards, the EXIT door, Rock Block, and Portal Window form a small **puzzle system**:
+    - Healing with the Medkit makes survival easier,
+    - but also changes the **level topology** and forces players to adapt their route.
 
-Player character art
-From Gun Bonbin by Seryhugo Studios
-(seryhugostudios.itch.io/gun-bonbin)
+---
 
-Music
-From the shared BGM pack
-(Google Drive folder: drive.google.com/drive/folders/1ce8LP87A2Yc1xRLvaCpZr13KI5S-f_Aw)
+## Asset Credits
 
-Other assets
-The remaining sprites and sounds come from resources used in my previous course assignments.
+- **Player character art**  
+  From _Gun Bonbin_ by Seryhugo Studios  
+  <https://seryhugostudios.itch.io/gun-bonbin>
+
+- **Music**  
+  From the shared BGM pack  
+  <https://drive.google.com/drive/folders/1ce8LP87A2Yc1xRLvaCpZr13KI5S-f_Aw>
+
+- **Other assets**  
+  Remaining sprites and sound effects come from resources used in my previous course assignments 
