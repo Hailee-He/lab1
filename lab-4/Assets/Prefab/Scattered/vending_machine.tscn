@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://dkj4wbwly3m8y"]
 
 [ext_resource type="Material" uid="uid://dvhdxlo1do2up" path="res://Assets/Model/Metro_PSX/Models/Vending_machine.tres" id="1_5hppe"]
-[ext_resource type="Script" path="res://Script/AutoCollider.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://cvumvcheup4am" path="res://Script/AutoCollider.gd" id="2_script"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_knnxg"]
 _surfaces = [{
