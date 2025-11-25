@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://n38y3cdi5xpu"]
+[gd_scene load_steps=4 format=3 uid="uid://n38y3cdi5xpu"]
 
 [ext_resource type="Script" uid="uid://ct23jjxw2lokk" path="res://Script/Player.gd" id="1_script"]
-[ext_resource type="AudioStream" path="res://Assets/Audio/Footsteps_DirtyGround_Run_01.wav" id="2_footstep1"]
-[ext_resource type="AudioStream" path="res://Assets/Audio/Footsteps_DirtyGround_Run_02.wav" id="3_footstep2"]
+[ext_resource type="AudioStream" uid="uid://bf5712wwj2xli" path="res://Assets/Audio/Footsteps_DirtyGround_Run_01.wav" id="2_footstep1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kpnpm"]
 height = 1.925293
