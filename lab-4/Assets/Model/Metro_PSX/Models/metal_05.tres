@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ndwhutfcj4ya"]
+
+[ext_resource type="Texture2D" uid="uid://bmdttu6i7i8c2" path="res://Assets/Model/Metro_PSX/Textures/metal_05.jpg" id="1_4mvv4"]
+
+[resource]
+resource_name = "metal_05"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_4mvv4")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0

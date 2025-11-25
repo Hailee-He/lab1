@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://d3flmkb4xygxt"]
+
+[ext_resource type="Texture2D" uid="uid://jk4brv58q0p5" path="res://Assets/Model/Metro_PSX/Textures/Trains_01.jpg" id="1_fktid"]
+
+[resource]
+resource_name = "Trains_01"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_fktid")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0

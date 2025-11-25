@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=4 uid="uid://c7ju64jixtxa1"]
+
+[ext_resource type="Material" uid="uid://cxuicg5tqarjt" path="res://Assets/Model/Metro_PSX/Models/metro_map.tres" id="1_1glah"]
+[ext_resource type="Script" path="res://Script/AutoCollider.gd" id="2_script"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rnhgs"]
+_surfaces = [{
+"aabb": AABB(-0.01, -0.0005992496, -0.01225941, 0.02, 0.0011985004, 0.02451882),
+"format": 34359742465,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAQAAAAQABAAAAAMABQACAAEAAwACAAUABAAGAAEAAQAGAAUAAwAHAAQABgAEAAcABQAHAAMABwAFAAYA"),
+"name": "metro_map",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("CtcjvAoXHTqx20g8CtcjvPYWHbqx20g8CtcjvPYWHbqx20i8CtcjvAoXHTqx20i8CtcjPAoXHTqx20g8CtcjPPYWHbqx20i8CtcjPPYWHbqx20g8CtcjPAoXHTqx20i8")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qkpiv"]
+resource_name = "metro_map"
+_surfaces = [{
+"aabb": AABB(-0.01, -0.0005992496, -0.01225941, 0.02, 0.0011985004, 0.02451882),
+"attribute_data": PackedByteArray("QIbdPAAAvD1A6LK8AAC8PUDosrwAgGg/QIbdPACAaD8AAIA/APDiuQAAAAAA8OK5AAAAADAOgD8AAIA/MA6AP0DosrwAALw9QIbdPAAAvD1Aht08AIBoP0DosrwAgGg/AAAAAADw4rkAAIA/APDiuQAAgD8wDoA/AAAAADAOgD9Q6LK8nD1VP0CG3TycPVU/QIbdPIwJKz4w6LK8jAkrPjDosryMCSs+QIbdPIwJKz5Aht08nD1VP1DosrycPVU/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAAFAAVABYAFgAXABQA"),
+"material": ExtResource("1_1glah"),
+"name": "metro_map",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("CtcjvAoXHTqx20g8CtcjvPYWHbqx20g8CtcjvPYWHbqx20i8CtcjvAoXHTqx20i8CtcjPAoXHTqx20g8CtcjvAoXHTqx20g8CtcjvAoXHTqx20i8CtcjPAoXHTqx20i8CtcjPPYWHbqx20g8CtcjPAoXHTqx20g8CtcjPAoXHTqx20i8CtcjPPYWHbqx20i8CtcjvPYWHbqx20g8CtcjPPYWHbqx20g8CtcjPPYWHbqx20i8CtcjvPYWHbqx20i8CtcjPPYWHbqx20i8CtcjPAoXHTqx20i8CtcjvAoXHTqx20i8CtcjvPYWHbqx20i8CtcjvPYWHbqx20g8CtcjvAoXHTqx20g8CtcjPAoXHTqx20g8CtcjPPYWHbqx20g8AAD/f/9/AAAAAP9//38AAAAA/3//fwAAAAD/f/9/AAD/f///////P/9///////8//3///////z//f///////P////3//f///////f/9///////9//3///////3//f////38AAP///7//fwAA////v/9/AAD///+//38AAP///7///////38AAP//////fwAA//////9/AAD//////38AAP9//3//f////3//f/9/////f/9//3////9//3//f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_rnhgs")
+
+[node name="Map" type="Node3D"]
+script = ExtResource("2_script")
+
+[node name="metro_map" type="MeshInstance3D" parent="."]
+transform = Transform3D(64.458015, 0, 0, 0, -7.683994e-06, 64.45801, 0, -64.45801, -7.683994e-06, 0, 0, 0)
+mesh = SubResource("ArrayMesh_qkpiv")
+skeleton = NodePath("")

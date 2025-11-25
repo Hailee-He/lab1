@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dveo0nftchg1w"
+path="res://.godot/imported/Urban nuclear detonation with building collapse and infrastructure destruction.wav-fb1f73cade05cffe00e7164996af084d.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Urban nuclear detonation with building collapse and infrastructure destruction.wav"
+dest_files=["res://.godot/imported/Urban nuclear detonation with building collapse and infrastructure destruction.wav-fb1f73cade05cffe00e7164996af084d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

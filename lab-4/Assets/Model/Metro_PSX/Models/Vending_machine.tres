@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dvhdxlo1do2up"]
+
+[ext_resource type="Texture2D" uid="uid://oqw48pnsnqd" path="res://Assets/Model/Metro_PSX/Textures/Vending_machine.png" id="1_dlvg5"]
+
+[resource]
+resource_name = "Vending_machine"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_dlvg5")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0

@@ -1,0 +1,328 @@
+[gd_scene load_steps=26 format=4 uid="uid://dtg710h52pq7s"]
+
+[ext_resource type="PackedScene" uid="uid://chelv1clfl6dm" path="res://Assets/Prefab/Metro/metro.tscn" id="1_4tgsq"]
+[ext_resource type="Texture2D" uid="uid://dk78ncuni1foi" path="res://Assets/Model/6twelve/Textures/Sign_01.png" id="1_60miw"]
+[ext_resource type="PackedScene" uid="uid://c30o2rjut2fq4" path="res://Assets/Prefab/world_environment.tscn" id="1_hchd5"]
+[ext_resource type="PackedScene" uid="uid://rpqmnnv2tddl" path="res://Assets/Prefab/Scattered/automatic_ticket_gate.tscn" id="2_ipriv"]
+[ext_resource type="PackedScene" uid="uid://n38y3cdi5xpu" path="res://Assets/Prefab/player.tscn" id="3_wxxrn"]
+[ext_resource type="PackedScene" uid="uid://bhax58ey7qkem" path="res://Assets/Prefab/Scattered/light.tscn" id="4_diw6t"]
+[ext_resource type="PackedScene" uid="uid://82vtb3nixeb8" path="res://Assets/Prefab/Train/train.tscn" id="5_fxrqg"]
+[ext_resource type="PackedScene" uid="uid://c7ju64jixtxa1" path="res://Assets/Prefab/Scattered/map.tscn" id="6_o3blu"]
+[ext_resource type="AudioStream" uid="uid://fc0vsjxtgxi1" path="res://Assets/Audio/Ambiance_Cave_Dark_Loop_Stereo.wav" id="7_45ch1"]
+[ext_resource type="PackedScene" uid="uid://bofytg6h388gs" path="res://Assets/Prefab/Scattered/ticket_machine.tscn" id="7_cgmwk"]
+[ext_resource type="Shader" uid="uid://dp7p02mtil8u1" path="res://Script/Shader/GameMain.gdshader" id="8_cgmwk"]
+[ext_resource type="AudioStream" uid="uid://dmxpp0n5gbt6e" path="res://Assets/Audio/Electromagnetic_Computer_Idle_Loop_Mono_Elektrousi_05.wav" id="9_ambient"]
+[ext_resource type="PackedScene" uid="uid://dkj4wbwly3m8y" path="res://Assets/Prefab/Scattered/vending_machine.tscn" id="10_ddgtl"]
+[ext_resource type="PackedScene" uid="uid://cacd65w38jf6i" path="res://Assets/Prefab/Scattered/trash_can.tscn" id="11_rnenk"]
+[ext_resource type="PackedScene" uid="uid://cytvguqoswrtc" path="res://Assets/Prefab/Scattered/chair.tscn" id="12_a83dk"]
+[ext_resource type="PackedScene" uid="uid://d02msquunlsqm" path="res://Assets/Prefab/Scattered/fuse_boxes_01.tscn" id="14_h0a5c"]
+[ext_resource type="PackedScene" uid="uid://cuhnqh3orifad" path="res://Assets/Prefab/Scattered/fuse_boxes_02.tscn" id="15_60miw"]
+[ext_resource type="Script" uid="uid://du63rehokclbj" path="res://Script/GameManager.gd" id="16_gamemanager"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ke3c"]
+resource_name = "Sign_01"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_60miw")
+emission_enabled = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ifbjt"]
+_surfaces = [{
+"aabb": AABB(-0.00063952984, -0.020173462, -0.01, 0.0012790549, 0.040346924, 0.02),
+"format": 34359742465,
+"index_count": 30,
+"index_data": PackedByteArray("AAABAAIAAwABAAAAAgAEAAAAAAAFAAMABQAAAAQABgAEAAIABAAGAAUAAwAFAAYAAgAHAAYABgAHAAMA"),
+"name": "Sign_01",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("zaUnOtFCpTwK1yM8H6YnutFCpTwK1yM8H6YnutFCpTwK1yO8H6YnutFCpbwK1yM8zaUnOtFCpTwK1yO8zaUnOtFCpbwK1yM8zaUnOtFCpbwK1yO8H6YnutFCpbwK1yO8")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_45ch1"]
+resource_name = "Sign"
+_surfaces = [{
+"aabb": AABB(-0.00063952984, -0.020173462, -0.01, 0.0012790549, 0.040346924, 0.02),
+"attribute_data": PackedByteArray("OBFqPmLcuT6scWM+Yty5PqxxYz7dhg8/OBFqPt2GDz+AWYS8AAAAAHYRgj8AAIAzdhGCPwAAgD+AWYS8AACAP6xxYz5i3Lk+OBFqPmLcuT44EWo+3YYPP6xxYz7dhg8/OBFqPoRDKT84EWo+/GKGPqxxYz78YoY+rHFjPoRDKT+scWM+hEMpP6xxYz78YoY+OBFqPvxihj44EWo+hEMpPw=="),
+"format": 34359742487,
+"index_count": 30,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAA"),
+"material": SubResource("StandardMaterial3D_6ke3c"),
+"name": "Sign_01",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("zaUnOtFCpTwK1yM8H6YnutFCpTwK1yM8H6YnutFCpTwK1yO8zaUnOtFCpTwK1yO8zaUnOtFCpbwK1yM8zaUnOtFCpTwK1yM8zaUnOtFCpTwK1yO8zaUnOtFCpbwK1yO8H6YnutFCpbwK1yM8zaUnOtFCpbwK1yM8zaUnOtFCpbwK1yO8H6YnutFCpbwK1yO8zaUnOtFCpbwK1yO8zaUnOtFCpTwK1yO8H6YnutFCpTwK1yO8H6YnutFCpbwK1yO8H6YnutFCpbwK1yM8H6YnutFCpTwK1yM8zaUnOtFCpTwK1yM8zaUnOtFCpbwK1yM8/3///////z//f///////P/9///////8//3///////z////9//3///////3//f///////f/9///////9//3////9/AAD///+//38AAP///7//fwAA////v/9/AAD///+//////////z//////////P/////////8//////////z//f/9/////v/9//3////+//3//f////7//f/9/////vw==")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ifbjt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wxxrn"]
+shader = ExtResource("8_cgmwk")
+shader_parameter/resolution_x = 320
+shader_parameter/resolution_y = 240
+shader_parameter/color_bit_depth = 4
+shader_parameter/dither_strength = 0.03
+shader_parameter/jitter_amount = 0.008
+shader_parameter/jitter_speed = 1.2
+shader_parameter/jitter_frequency = 180.0
+shader_parameter/chromatic_aberration_strength = 0.015
+shader_parameter/vignette_strength = 0.8
+shader_parameter/vignette_radius = 0.800000038
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_60miw"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_45ch1"]
+noise = SubResource("FastNoiseLite_60miw")
+
+[sub_resource type="FogMaterial" id="FogMaterial_60miw"]
+density = 0.6
+emission = Color(0.40399483, 0.40399435, 0.40399462, 1)
+height_falloff = 3.838012
+edge_fade = 0.22973973
+density_texture = SubResource("NoiseTexture3D_45ch1")
+
+[node name="GameMain" type="Node"]
+
+[node name="Sign" type="MeshInstance3D" parent="."]
+transform = Transform3D(-24.210688, -2.1165658e-06, 2.1165656e-06, 2.1165658e-06, -4.3292084e-06, 24.210686, 2.1165656e-06, -24.210686, -2.886139e-06, 13.7224865, 2.3089635, 26.139301)
+mesh = SubResource("ArrayMesh_45ch1")
+skeleton = NodePath("")
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_hchd5")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_wxxrn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FadeOverlay" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="InteractionLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E to get food"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -11.5
+offset_right = 34.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "THE END"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player" parent="." instance=ExtResource("3_wxxrn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.178497, 2.9172611, 32.83113)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.074769825, 0.99720085, 0, -0.99720085, 0.074769825, 0, 0, 0)
+light_color = Color(0.78775924, 0.78775924, 0.78775924, 1)
+light_volumetric_fog_energy = 0.0
+light_bake_mode = 0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.055734362, 0.0746536, 0.9956508, -0.99844563, -0.0041672485, -0.055578355, 0, -0.99720085, 0.074769825, 0, 0, 0)
+light_volumetric_fog_energy = 0.0
+light_bake_mode = 0
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.056274682, -0.07465136, -0.99562055, 0.99841535, -0.0042076493, -0.056117155, 8.7016776e-11, -0.99720085, 0.07476985, 0, 0, 0)
+light_color = Color(0.76090056, 0.74669725, 0.7405897, 1)
+light_volumetric_fog_energy = 0.0
+
+[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="."]
+transform = Transform3D(2.7921068e-09, 0.99720085, -0.074769795, 0.99841535, -0.0042076493, -0.056117155, -0.056274682, -0.074651316, -0.99562055, 0, 0, 0)
+light_color = Color(0.76090056, 0.74669725, 0.7405897, 1)
+light_energy = 2.0
+light_volumetric_fog_energy = 0.0
+
+[node name="Metro" parent="." instance=ExtResource("1_4tgsq")]
+metadata/_edit_lock_ = true
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.394841, 3.0986068, 22.657606)
+stream = ExtResource("9_ambient")
+attenuation_model = 2
+autoplay = true
+max_distance = 25.0
+
+[node name="AmbientSound2" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.231826, 7.628949, 60.257454)
+stream = ExtResource("7_45ch1")
+attenuation_model = 2
+autoplay = true
+max_distance = 25.0
+
+[node name="AutomaticTicketGate" parent="." instance=ExtResource("2_ipriv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.226224, 5.640575, 52.98389)
+
+[node name="AutomaticTicketGate2" parent="." instance=ExtResource("2_ipriv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.352881, 5.640575, 52.98389)
+
+[node name="AutomaticTicketGate3" parent="." instance=ExtResource("2_ipriv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.439063, 5.640575, 52.98389)
+
+[node name="AutomaticTicketGate4" parent="." instance=ExtResource("2_ipriv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.537963, 5.640575, 52.98389)
+
+[node name="Light" parent="." instance=ExtResource("4_diw6t")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 10.477727, 6.42335, 25.983877)
+
+[node name="Light4" parent="." instance=ExtResource("4_diw6t")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 10.477727, 6.42335, 20.262714)
+flicker_level = 0
+
+[node name="Light5" parent="." instance=ExtResource("4_diw6t")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 10.477727, 6.42335, 14.321552)
+flicker_level = 2
+
+[node name="Light6" parent="." instance=ExtResource("4_diw6t")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 10.477727, 6.42335, 6.7283096)
+
+[node name="Light2" parent="." instance=ExtResource("4_diw6t")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 10.477727, 6.42335, 32.76066)
+flicker_level = 2
+
+[node name="Light3" parent="." instance=ExtResource("4_diw6t")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 10.477727, 6.42335, 38.34465)
+flicker_level = 0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-3.7855177e-08, -0.5, 0.8660254, -2.1855694e-08, 0.8660254, 0.5, -1, 1.7763568e-15, -4.371139e-08, 20.802586, 12.792283, 65.02373)
+light_color = Color(0.8151441, 0.8151441, 0.8151441, 1)
+light_energy = 8.301
+light_indirect_energy = 10.32
+spot_range = 26.840057
+spot_angle = 35.33751
+
+[node name="Train" parent="." instance=ExtResource("5_fxrqg")]
+transform = Transform3D(0.9965392, 0.007724259, 0.08276411, -0.013253694, 0.99770033, 0.06647001, -0.08206034, -0.06733689, 0.9943499, 4.3524184, 0.5953443, 44.33411)
+
+[node name="Train2" parent="." instance=ExtResource("5_fxrqg")]
+transform = Transform3D(0.024875054, 0.990915, -0.1321699, -0.99968535, 0.025095219, -1.0815458e-10, 0.0033168304, 0.13212822, 0.99122715, 2.14826, 3.307837, 20.191547)
+
+[node name="Train3" parent="." instance=ExtResource("5_fxrqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6797404, 0, -3.3239517)
+
+[node name="Map" parent="." instance=ExtResource("6_o3blu")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.690266, 4.2248435, 31.597084)
+
+[node name="TicketMachine" parent="." instance=ExtResource("7_cgmwk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12.29409, 5.5936894, 57.52922)
+
+[node name="TicketMachine2" parent="." instance=ExtResource("7_cgmwk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12.29409, 5.5870876, 58.858288)
+
+[node name="TicketMachine3" parent="." instance=ExtResource("7_cgmwk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12.29409, 5.5822563, 60.158073)
+
+[node name="TicketMachine4" parent="." instance=ExtResource("7_cgmwk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12.29409, 5.6045547, 61.47065)
+
+[node name="VendingMachine" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(0.89438075, -0.44730645, -1.9552386e-08, 0, -4.371139e-08, 1, -0.44730645, -0.89438075, -3.9094623e-08, 12.931993, 1.7579944, 41.754974)
+
+[node name="Food" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(0.031829473, -0.99949336, 0, 0.99949336, 0.031829473, 0, 0, 0, 1, 5.432279, 3.135198, 42.16042)
+
+[node name="VendingMachine6" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 10.842675, 2.1589353, 8.139176)
+
+[node name="VendingMachine7" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(0.7038788, 0.6013164, 0.37811828, -0.011636555, 0.54201055, -0.84029114, -0.7102247, 0.58706295, 0.38850704, 7.9438677, 1.6711547, 7.412838)
+
+[node name="VendingMachine4" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(0.2769625, 0.96088076, 2.9895016e-08, 4.371139e-08, -4.371139e-08, 1, 0.96088076, -0.2769625, -5.4107847e-08, 8.566141, 1.7425873, 9.171092)
+
+[node name="VendingMachine5" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(0.6889219, 0.24992412, -0.68038535, -0.16510604, 0.9681075, 0.18843485, 0.7057805, -0.017481191, 0.7082145, 12.411299, 1.5828472, 9.171092)
+
+[node name="VendingMachine2" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(-0.90722275, 0.20558386, 0.36699066, -0.17464559, 0.6096048, -0.7732276, -0.38268232, -0.765583, -0.517143, 11.309882, 5.8887987, 55.460556)
+
+[node name="VendingMachine3" parent="." instance=ExtResource("10_ddgtl")]
+transform = Transform3D(-0.96104574, -0.18761401, -0.20295864, 0.006981805, 0.7176075, -0.6964132, 0.27630144, -0.67070174, -0.6883437, 9.291582, 5.9293466, 56.340412)
+
+[node name="TrashCan" parent="." instance=ExtResource("11_rnenk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3656893, 1.4019123, 41.583866)
+
+[node name="Chair" parent="." instance=ExtResource("12_a83dk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.495522, 1.3962402, 33.97462)
+
+[node name="Chair3" parent="." instance=ExtResource("12_a83dk")]
+transform = Transform3D(0.46123645, -0.35653958, 0.8124903, 0.46153536, 0.8784843, 0.12349369, -0.75779015, 0.31803322, 0.5697446, 10.491046, 6.2375655, 54.21901)
+
+[node name="Chair4" parent="." instance=ExtResource("12_a83dk")]
+transform = Transform3D(0.1288521, 0.98549914, 0.110403694, 0.38796452, 0.05236126, -0.9201859, -0.9126229, 0.16140053, -0.37559175, 8.637106, 6.5972705, 54.21901)
+
+[node name="Chair2" parent="." instance=ExtResource("12_a83dk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.495522, 1.3962402, 29.116676)
+
+[node name="Fuse_Boxes_01" parent="." instance=ExtResource("14_h0a5c")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 13.579124, 2.3063014, 20.909803)
+
+[node name="Fuse_Boxes_02" parent="." instance=ExtResource("15_60miw")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 13.355254, 3.0608559, 22.88492)
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.098366, 7.9285564, 54.12654)
+size = Vector3(4.8742676, 4.0567627, 2.0751944)
+material = SubResource("FogMaterial_60miw")
+
+[node name="EmergencyLight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.50000024, 0, -0.50000024, 0.8660253, 10, 5.686384, 16.525444)
+light_color = Color(2.5888853, 0, 0, 1)
+light_energy = 0.0
+spot_range = 20.0
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("player", "fade_overlay", "food_object", "chair_object", "interaction_label", "end_label", "ambient_sounds", "directional_lights", "scene_lights", "emergency_light")]
+script = ExtResource("16_gamemanager")
+player = NodePath("../Player")
+fade_overlay = NodePath("../CanvasLayer/FadeOverlay")
+food_object = NodePath("../Food")
+chair_object = NodePath("../Chair")
+interaction_label = NodePath("../CanvasLayer/InteractionLabel")
+end_label = NodePath("../CanvasLayer/EndLabel")
+ambient_sounds = [NodePath("../AmbientSound"), NodePath("../AmbientSound2")]
+directional_lights = [NodePath("../DirectionalLight3D"), NodePath("../DirectionalLight3D2"), NodePath("../DirectionalLight3D3"), NodePath("../DirectionalLight3D4")]
+scene_lights = [NodePath("../Light"), NodePath("../Light2"), NodePath("../Light3"), NodePath("../Light4"), NodePath("../Light5"), NodePath("../Light6")]
+emergency_light = NodePath("../EmergencyLight")

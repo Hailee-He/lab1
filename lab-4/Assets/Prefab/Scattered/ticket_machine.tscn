@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=4 uid="uid://bofytg6h388gs"]
+
+[ext_resource type="Material" uid="uid://q57hwiymidnu" path="res://Assets/Model/Metro_PSX/Models/ticket_machine.tres" id="1_m3jp2"]
+[ext_resource type="Script" path="res://Script/AutoCollider.gd" id="2_script"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vxfxn"]
+_surfaces = [{
+"aabb": AABB(-0.010216667, -0.004362764, -0.018849742, 0.020433335, 0.008725526, 0.047143824),
+"format": 34359742465,
+"index_count": 66,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAQAAAAQABAAAAAMABQACAAEAAwACAAUABAAGAAEAAQAGAAUAAwAHAAQABgAEAAcABQAHAAMABwAFAAYACAAJAAoACgALAAgADAAKAAkADQAIAAsACQAIAA0ACwAOAA0ACQAPAAwADgAMAA8ADQAPAAkADwANAA4A"),
+"name": "ticket_machine",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("z2MnvIH1jjvEapo8z2MnvIT1jrvEapo8z2MnvIT1jrvGapq8z2MnvIH1jjvGapq8z2MnPIH1jjvEapo8z2MnPIT1jrvGapq8z2MnPIT1jrvEapo8z2MnPIH1jjvGapq8+L8bvHcl4Tn9yOc8+L8bvHcl4bn9yOc8+L8bvHcl4blwl5c8+L8bvHcl4Tlwl5c8+L8bPHcl4blwl5c8+L8bPHcl4Tn9yOc8+L8bPHcl4Tlwl5c8+L8bPHcl4bn9yOc8")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8gckf"]
+resource_name = "ticket_machine"
+_surfaces = [{
+"aabb": AABB(-0.010216667, -0.004362764, -0.018849742, 0.020433335, 0.008725526, 0.047143824),
+"attribute_data": PackedByteArray("YNaePNBErz1g1p488M5/PtydOj/wzn8+3J06P9BErz3aAss+vmeLPsAh/ju+Z4s+wCH+O061fj/aAss+TrV+P1hZpTu2SIM+d1mlO5iUtj0iTDo/qJS2PSFMOj+4SIM+huvPPlDGiT7uO0w/UMaJPu47TD+W5H0/huvPPpbkfT+B+Dk/CLBmPnGdKj8IsGY+cZ0qP9CpyD2B+Dk/0KnIPbAACj2wOYA+sAAKPRCitj3dmtI+EKK2Pd2a0j6wOYA++iF8P8B0YT+QZn8/wHRhP5Bmfz8Q/zw/+iF8PxD/PD92yH4/Wxh9P3bIfj8+yx8/Vb5OPz7LHz9Vvk4/Whh9P5Bmfz/AdGE/+iF8P8B0YT/6IXw/EP88P5Bmfz8Q/zw/8aZ+P9GtID/xpn4//sV9Pw27UD/+xX0/DbtQP9GtID/SKnw/Ug4rP7ddfz9SDis/t11/P35lcz/SKnw/fmVzPw=="),
+"format": 34359742487,
+"index_count": 66,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAAFAAVABYAFgAXABQAGAAZABoAGgAbABgAHAAdAB4AHgAfABwAIAAhACIAIgAjACAAJAAlACYAJgAnACQAKAApACoAKgArACgA"),
+"material": ExtResource("1_m3jp2"),
+"name": "ticket_machine",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 44,
+"vertex_data": PackedByteArray("z2MnvIH1jjvEapo8z2MnvIT1jrvEapo8z2MnvIT1jrvGapq8z2MnvIH1jjvGapq8z2MnPIH1jjvEapo8z2MnvIH1jjvEapo8z2MnvIH1jjvGapq8z2MnPIH1jjvGapq8z2MnPIT1jrvEapo8z2MnPIH1jjvEapo8z2MnPIH1jjvGapq8z2MnPIT1jrvGapq8z2MnvIT1jrvEapo8z2MnPIT1jrvEapo8z2MnPIT1jrvGapq8z2MnvIT1jrvGapq8z2MnPIT1jrvGapq8z2MnPIH1jjvGapq8z2MnvIH1jjvGapq8z2MnvIT1jrvGapq8z2MnvIT1jrvEapo8z2MnvIH1jjvEapo8z2MnPIH1jjvEapo8z2MnPIT1jrvEapo8+L8bvHcl4Tn9yOc8+L8bvHcl4bn9yOc8+L8bvHcl4blwl5c8+L8bvHcl4Tlwl5c8+L8bPHcl4Tn9yOc8+L8bvHcl4Tn9yOc8+L8bvHcl4Tlwl5c8+L8bPHcl4Tlwl5c8+L8bPHcl4bn9yOc8+L8bPHcl4Tn9yOc8+L8bPHcl4Tlwl5c8+L8bPHcl4blwl5c8+L8bvHcl4bn9yOc8+L8bPHcl4bn9yOc8+L8bPHcl4blwl5c8+L8bvHcl4blwl5c8+L8bvHcl4bn9yOc8+L8bvHcl4Tn9yOc8+L8bPHcl4Tn9yOc8+L8bPHcl4bn9yOc8AAD/f///AAAAAP9///8AAAAA/3///wAAAAD/f///AAD/f///////P/9///////8//3///////z//f///////P////3/+////////f/7///////9//////////3///////38AAP///7//fwAA////v/9/AAD///+//38AAP///7///////38AgP//////fwCA//////9/AID//////38AgP9//3////+//3//f////7//f/9/////v/9//3////+/AAD/f/9//n8AAP9//3/+fwAA/3//f/5/AAD/f/9//n//f////3//P/9/////f/8//3////9//z//f////3//P////3//fwCA////f/9/AID///9//38AgP///3//fwCA/38AAP9//7//fwAA/3//v/9/AAD/f/+//38AAP9//7//f/9//3////9//3//f////3//f/9/////f/9//3///w==")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_vxfxn")
+
+[node name="TicketMachine" type="Node3D"]
+script = ExtResource("2_script")
+
+[node name="ticket_machine" type="MeshInstance3D" parent="."]
+transform = Transform3D(47.473614, 0, 0, 0, -5.6592958e-06, 47.47361, 0, -47.47361, -5.6592958e-06, 0, 0.89278376, 0)
+mesh = SubResource("ArrayMesh_8gckf")
+skeleton = NodePath("")

@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://c30o2rjut2fq4"]
+
+[sub_resource type="Sky" id="Sky_8yycj"]
+
+[sub_resource type="Environment" id="Environment_4tgsq"]
+background_mode = 2
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_8yycj")
+ambient_light_source = 3
+tonemap_mode = 3
+tonemap_exposure = 0.6
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_bloom = 0.3
+glow_blend_mode = 0
+glow_map_strength = 1.0
+fog_enabled = true
+fog_light_color = Color(0.100430034, 0.09730481, 0.116045244, 1)
+fog_sun_scatter = 0.3
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.2
+volumetric_fog_albedo = Color(0.24477637, 0.2447764, 0.24477637, 1)
+adjustment_enabled = true
+adjustment_contrast = 1.2
+adjustment_saturation = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_4tgsq")

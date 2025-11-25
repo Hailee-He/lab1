@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=4 uid="uid://d02msquunlsqm"]
+
+[ext_resource type="Script" uid="uid://cvumvcheup4am" path="res://Script/AutoCollider.gd" id="1_55s22"]
+[ext_resource type="Texture2D" uid="uid://yxyvk1rtmanb" path="res://Assets/Model/6twelve/Textures/outdoor electronics.jpg" id="1_xtetn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uogin"]
+resource_name = "outdoor electronics"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_xtetn")
+emission_enabled = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_a7x3o"]
+_surfaces = [{
+"aabb": AABB(-0.004128924, -0.01, -0.03191027, 0.009055792, 0.02, 0.05976107),
+"format": 34359742465,
+"index_count": 78,
+"index_data": PackedByteArray("AAABAAIAAQAAAAMAAgAEAAAAAwAAAAQABQAEAAIAAgAGAAUABAAFAAcABgACAAgACAACAAEABwAJAAQABAAJAAMACQAHAAoACAAKAAYACgAIAAkACwADAAkAAQAMAAgAAwAMAAEADQAIAAwADgAMAAMADAAOAA0AAwALAA4ACAANAA8ADwAJAAgADwANAA4ACQAPAAsADgALAA8A"),
+"name": "outdoor electronics",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("7UuHuwrXIzxcJ+Q87UuHuwrXI7xcJ+Q87UuHuwrXI7xYIiS8CMsLOwrXIzxcJ+Q87UuHuwrXIzxYIiS87UuHuwrXIzxYtAK97UuHuwrXI7xYtAK9CMsLOwrXIzxYtAK9CMsLOwrXI7xYIiS8CMsLOwrXIzxYIiS8CMsLOwrXI7xYtAK9kXGhOwrXIzxcJ+Q8CMsLOwrXI7xcJ+Q8kXGhOwrXI7xYIiS8kXGhOwrXI7xcJ+Q8kXGhOwrXIzxYIiS8")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_55s22"]
+resource_name = "Fuse_Boxes_01"
+_surfaces = [{
+"aabb": AABB(-0.004128924, -0.01, -0.03191027, 0.009055792, 0.02, 0.05976107),
+"attribute_data": PackedByteArray("uufzPfD6Bj5wn9o88PoGPnCf2jyoYZY+vufzPaZhlj7udzs+8PoGPmzXHT7w+gY+bdcdPqZhlj7wdzs+pmGWPsSvSD70+gY+xa9IPqhhlj45s2U+mDrIPjmzZT6YOsg+A/nfOpQ6yD4D+d86lDrIPmzXHT7w+gY+7nc7PvD6Bj7udzs+qGGWPmvXHT6mYZY+w69IPqhhlj7Dr0g+9PoGPhjy2jz4gpM+GPLaPDDIJj4eho09MMgmPh6GjT34gpM+gj60PfyCkz6CPrQ9MMgmPsz43zqT1R0/A/nfOpQ6yD45s2U+mDrIPjizZT6V1R0/APnfOgBUizo6s2U+AFSLOjmzZT6YOsg+A/nfOpQ6yD4wVB4+lNUdPzFUHj6WOsg+ObNlPpg6yD44s2U+ldUdP0CzZT6T1R0/PbNlPpQ6yD41VB4+lDrIPjdUHj6U1R0/QLNlPpPVHT89s2U+lDrIPkD53zqYOsg+5/nfOpXVHT8="),
+"format": 34359742487,
+"index_count": 78,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAEAAcABwAJAAgACgALAAwADAANAAoADgAPABAAEAARAA4AEgAQAA8ADwATABIAFAAVABYAFgAXABQAGAAXABYAFgAZABgAGgAbABwAHAAdABoAHgAfACAAIAAhAB4AIgAjACQAJAAlACIAJgAnACgAKAApACYAKgArACwALAAtACoA"),
+"material": SubResource("StandardMaterial3D_uogin"),
+"name": "outdoor electronics",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 46,
+"vertex_data": PackedByteArray("7UuHuwrXIzxcJ+Q87UuHuwrXI7xcJ+Q87UuHuwrXI7xYIiS87UuHuwrXIzxYIiS8CMsLOwrXIzxcJ+Q87UuHuwrXIzxcJ+Q87UuHuwrXIzxYIiS8CMsLOwrXIzxYIiS8kXGhOwrXIzxcJ+Q8kXGhOwrXIzxYIiS8kXGhOwrXIzxYIiS8CMsLOwrXIzxYIiS8CMsLOwrXI7xYIiS8kXGhOwrXI7xYIiS87UuHuwrXI7xcJ+Q8CMsLOwrXI7xcJ+Q8CMsLOwrXI7xYIiS87UuHuwrXI7xYIiS8kXGhOwrXI7xYIiS8kXGhOwrXI7xcJ+Q87UuHuwrXI7xcJ+Q87UuHuwrXIzxcJ+Q8CMsLOwrXIzxcJ+Q8CMsLOwrXI7xcJ+Q8kXGhOwrXI7xcJ+Q8kXGhOwrXIzxcJ+Q8CMsLOwrXI7xYtAK9CMsLOwrXI7xYIiS8CMsLOwrXIzxYIiS8CMsLOwrXIzxYtAK9kXGhOwrXI7xcJ+Q8kXGhOwrXIzxcJ+Q8kXGhOwrXIzxYIiS8kXGhOwrXI7xYIiS87UuHuwrXI7xYtAK97UuHuwrXI7xYIiS8CMsLOwrXI7xYIiS8CMsLOwrXI7xYtAK9CMsLOwrXIzxYtAK9CMsLOwrXIzxYIiS87UuHuwrXIzxYIiS87UuHuwrXIzxYtAK97UuHuwrXIzxYtAK97UuHuwrXIzxYIiS87UuHuwrXI7xYIiS87UuHuwrXI7xYtAK9AAD/f/9/AAAAAP9//38AAAAA/3//fwAAAAD/f/9/AAD/f////v//P/9///////8//3///////z//f////v//P/9////+//8//3////7//z//////////v/////////+//////////7//////////v/9/AAD+//+//38AAP7//7//fwAA/v//v/9/AAD+//+//38AAP7//7//fwAA/v//v/9//3////+//3//f////7//f/9//v//v/9//3/+//+//3//f/7//7//f/9/////v////3//f/7/////f/9//v////9//3/+/////3//f/7/////f/9//v////9//3///////3//f/7/////f/9//v//fwAA/v//v/9/AAD+//+//38AAP7//7//fwAA/v//v/9///////8//3///////z//f///////P/9///////8/AAD/f/9/AAAAAP9//38AAAAA/3//fwAAAAD/f/9/AAA=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_a7x3o")
+
+[node name="Fuse_Boxes_01" type="Node3D"]
+script = ExtResource("1_55s22")
+
+[node name="Fuse_Boxes_01" type="MeshInstance3D" parent="."]
+transform = Transform3D(27.504549, 0, 0, 0, -3.2787977e-06, 27.504547, 0, -27.504547, -3.2787977e-06, 0, 0, 0)
+mesh = SubResource("ArrayMesh_55s22")
+skeleton = NodePath("")
